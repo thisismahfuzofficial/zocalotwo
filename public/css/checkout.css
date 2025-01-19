@@ -1,0 +1,92 @@
+.btn-wrapper {
+    background:
+        color-mix(in srgb, var(--accent-color), transparent 20%) !important;
+    padding: 15px 0px;
+}
+
+.order_btn {
+    border: 0px !important;
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    /* padding: 5px 12px; */
+    height: 100% !important;
+    width: 415px !important;
+}
+
+.order_btn:hover {
+    border-radius: 0px !important;
+    border: 0px !important;
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    height: 100% !important;
+    width: 415px !important;
+    background: color-mix(in srgb, var(--accent-color), transparent 20%) !important;
+    color: var(--background-color) !important;
+}
+
+.checkout_main_body {
+    border: 1px solid var(--accent-color);
+}
+
+.contact .php-email-form button[type=submit] {
+    background: none;
+    border: 2px solid var(--accent-color);
+    padding: 8px 36px;
+    transition: 0.4s;
+    border-radius: 0px !important;
+}
+
+.form-select {
+    font-size: 14px;
+    padding: 10px 15px;
+    box-shadow: none;
+    border-radius: 0;
+    background-color:
+        color-mix(in srgb, var(--background-color), transparent 50%);
+    border-color: var(--accent-color);
+
+}
+
+.form-select:focus {
+    border: 1px solid var(--accent-color);
+    box-shadow: none;
+}
+
+#takeAwayForm,
+#homeDeliveryForm {
+    display: none;
+}
+
+.form-select option {
+    background-color:
+        color-mix(in srgb, var(--background-color) 90%, white 5%);
+}
+
+input[type="number"] {
+    font-size: 14px !important;
+    padding: 10px 15px !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background-color:
+        color-mix(in srgb, var(--background-color), transparent 50%) !important;
+    border-color:
+        color-mix(in srgb, var(--accent-color), transparent 70%) !important;
+    color: var(--default-color) !important;
+}
+
+input[type="number"]:focus {
+    border-color: var(--accent-color) !important;
+}
+
+input[type='number']::placeholder {
+    color: var(--accent-color) !important;
+    opacity: 0.5 !important;
+}
+
+option {
+    color: #e5d5bf !important;
+}
+
+.form-select {
+    color: #e5d5bf !important;
+}

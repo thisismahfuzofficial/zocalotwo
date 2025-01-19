@@ -1,0 +1,180 @@
+.btn-orange-normal {
+    color: var(--default-color) !important;
+    border: 2px solid var(--accent-color) !important;
+    background: transparent;
+    padding: 8px 30px !important;
+    transition: 0.4s !important;
+    border-radius: 50px !important;
+}
+
+.homeSlide {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 48px;
+    font-weight: 700;
+}
+
+.slidetext {
+    color: var(--default-color);
+    font-size: 24px;
+}
+
+.btn-orange-normal:hover {
+    color: var(--default-color) !important;
+    background-color: var(--accent-color) !important;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+
+
+    .Mainslide {
+        margin-top: 40px;
+        height: auto !important;
+    }
+
+    .homeSlide {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 30px !important;
+        font-weight: 500 !important;
+    }
+
+    .slidetext {
+        color: var(--default-color);
+        font-size: 16px !important;
+    }
+}
+
+@media (min-width: 375px) and (max-width: 667px) {
+    #header {
+        background-color: rgba(0, 0, 0, 0.912) !important
+    }
+
+    .Mainslide {
+        margin-top: 40px;
+        height: auto !important;
+    }
+
+    .homeSlide {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 18px;
+        font-weight: 400;
+    }
+
+    .slidetext {
+        color: var(--default-color);
+        font-size: 10px;
+    }
+
+    .btn-orange-normal {
+        color: var(--default-color) !important;
+        border: 1px solid var(--accent-color) !important;
+        background: transparent;
+        padding: 4px 14px !important;
+        transition: 0.4s !important;
+        border-radius: 50px !important;
+        font-size: 12px !important;
+    }
+
+    .btn-orange-normal:hover {
+        color: var(--default-color) !important;
+        background-color: var(--accent-color) !important;
+    }
+}
+
+@media (min-width: 344px) and (max-width: 882px) {
+    #header {
+        background-color: rgba(0, 0, 0, 0.912) !important
+    }
+
+    .Mainslide {
+        margin-top: 40px;
+        height: auto !important;
+    }
+
+    .homeSlide {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14px;
+        font-weight: 300;
+    }
+
+    .slidetext {
+        color: var(--default-color);
+        font-size: 8px;
+    }
+
+    .btn-orange-normal {
+        color: var(--default-color) !important;
+        border: 1px solid var(--accent-color) !important;
+        background: transparent;
+        padding: 3px 8px !important;
+        transition: 0.4s !important;
+        border-radius: 50px !important;
+        font-size: 8px !important;
+    }
+
+    .btn-orange-normal:hover {
+        color: var(--default-color) !important;
+        background-color: var(--accent-color) !important;
+    }
+}
+
+@media (min-width: 360px) and (max-width: 740px) {
+
+    #header {
+        background-color: rgba(0, 0, 0, 0.912) !important
+    }
+
+    .Mainslide {
+        margin-top: 40px;
+        height: auto !important;
+    }
+
+    .homeSlide {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 18px;
+        font-weight: 400;
+    }
+
+    .slidetext {
+        color: var(--default-color);
+        font-size: 10px;
+    }
+
+    .btn-orange-normal {
+        color: var(--default-color) !important;
+        border: 1px solid var(--accent-color) !important;
+        background: transparent;
+        padding: 4px 14px !important;
+        transition: 0.4s !important;
+        border-radius: 50px !important;
+        font-size: 12px !important;
+    }
+
+    .btn-orange-normal:hover {
+        color: var(--default-color) !important;
+        background-color: var(--accent-color) !important;
+    }
+}
+
+@media (min-width: 360px) and (max-width: 740px) {
+    .btn-orange-normal {
+       display: none;
+    }
+}
+@media (min-width: 344px) and (max-width: 882px) {
+    .btn-orange-normal {
+       display: none;
+    }
+}
+@media (min-width: 853px) and (max-width: 1280px) {
+    .btn-orange-normal {
+        font-size: 16px !important;
+        padding: 8px 14px !important;
+    }
+}
+@media (min-width: 540px) and (max-width: 720px) {
+    .btn-orange-normal {
+        font-size: 16px !important;
+        padding: 8px 14px !important;
+        display:inline-block !important;
+    }
+}
