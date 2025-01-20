@@ -8,11 +8,12 @@
         $extra_charge = Settings::setting('extra.charge');
 
         // $zone = $restaurant ? $restaurant->zones->get() : null;
-         // Cart::clear();
+        // Cart::clear();
         //dd(Cart::getContent());
+
     @endphp
 
-    <x-user>
+    {{-- <x-user>
         @push('css')
             <link rel="stylesheet" href="{{ asset('css/checkout.css') }}">
 
@@ -55,8 +56,6 @@
                                 <a href="{{ route('restaurant.cart', ['slug' => $restaurant->slug]) }}" role="button"
                                     class="btn sushibtn p-md-3 goback"> <i class="bi bi-chevron-left"></i> </a>
 
-                                {{-- <a href="{{ route('restaurant.menu', ['slug' => $restaurant->slug]) }}" role="button"
-                                    class="btn sushibtn p-md-3 goback"> Menu <i class="bi bi-chevron-right"></i></a> --}}
                             </div>
                             <div class=" section-title aos-init aos-animate pb-0" data-aos="fade-up">
                                 <p class="">{{ __('sentence.checkout') }}</p>
@@ -428,4 +427,117 @@
                 });
             </script>
         @endpush
-    </x-user>
+    </x-user> --}}
+
+    <x-main>
+        <!-- Contact Section -->
+        <section id="contact" class="contact section">
+
+            <!-- Section Title -->
+            <div class="container section-title" data-aos="fade-up">
+                <p><span class="description-title">Check Out</span></p>
+            </div><!-- End Section Title -->
+
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
+                <div class="row gap-4">
+                    <div class="col-md-7 border rounded ">
+                        <div class="">
+                            @if ($restaurant->latest())
+                                <div class="content mb-3 mt-5" data-aos="fade-up">
+                                    <h2 class="text-colour">{{ $restaurant->name }}</h2>
+
+                                    <div class="d-flex gap-3">
+                                    </div>
+                                </div>
+                            @endif
+
+                            <div class="row gy-4">
+
+                                <div class="col-md-6 ">
+                                    <input type="text" class="form-control" name="f_name"
+                                        placeholder="{{ __('sentence.your_first_name') }}" required
+                                        value={{ auth()->user()->name ?? '' }}>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <input type="text" name="l_name" class="form-control"
+                                        placeholder="{{ __('sentence.your_last_name') }}" required
+                                        value={{ auth()->user()->l_name ?? '' }}>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <input type="text" id="number_type" name="phone" class="form-control"
+                                        placeholder="{{ __('sentence.your_phone_numder') }}" required
+                                        value={{ auth()->user()->phone ?? '' }}>
+                                </div>
+
+
+                                <div class="col-md-6">
+                                    <select name="time_option"class="form-select selectpicker" data-container="body"
+                                        disabled>
+                                        @foreach ($timeSlots as $time)
+                                            <option value="{{ $time }}"
+                                                {{ isset($timeSelect[0]) && $time == $timeSelect[0] ? 'selected' : '' }}>
+                                                {{ $time }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <input type="email" name="email" disabled
+                                        class="form-control @error('email') is-invalid @enderror"
+                                        placeholder="{{ __('sentence.your_email') }}" required=""
+                                        value="{{ old('email', auth()->user()->email ?? '') }}">
+                                    @error('email')
+                                        <p class="invalid-feedback">
+                                            <strong>{{ $message }}</strong>
+                                        </p>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-12">
+                                    <textarea name="commment" class="form-control" placeholder="{{ __('sentence.your_comment') }}" style="height:122px;"></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 border rounded ">
+                        <div class="heading border-bottom">
+                            <div class="h3 py-2">Your Cart</div>
+                        </div>
+                        <div class="title d-flex justify-content-between my-2">
+                            <div class="h4">Product</div>
+                            <div class="h4">Price</div>
+                        </div>
+                        <hr>
+                        <div class="products d-flex justify-content-between mt-2">
+                            <p>Product name <span>* 3</span></p>
+                            <p>$100.00</p>
+                        </div>
+                        <hr>
+                        <div class="title d-flex justify-content-between my-2">
+                            <div class="h4">Subtotal</div>
+                            <div class="h4">$100.00</div>
+                        </div>
+                        <div class="title d-flex justify-content-between my-2">
+                            <div class="h4">Management fees</div>
+                            <div class="h4">$100.00</div>
+                        </div>
+                        <div class="title d-flex justify-content-between my-2">
+                            <div class="h4">VAT</div>
+                            <div class="h4">$100.00</div>
+                        </div>
+                        <div class="title d-flex justify-content-between my-2">
+                            <div class="h3">Total</div>
+                            <div class="h3">$100.00</div>
+                        </div>
+                        <button class="btn btn-danger w-100 my-3">Make Payment</button>
+                    </div>
+                </div>
+            </div>
+
+        </section><!-- /Contact Section -->
+
+    </x-main>

@@ -414,10 +414,9 @@ class PageController extends Controller
         ]);
 
         return redirect(route('order.restaurants'))->with('success', 'Order and Delivery Time Selected');
-
     }
     public function OrderRestaurants()
-    {
+    {   
         $infoRestaurant = session('info_restaurant');
         $latitude = $infoRestaurant['latitude'];
         $longitude = $infoRestaurant['longitude'];
