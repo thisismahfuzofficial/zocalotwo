@@ -1,4 +1,4 @@
-<x-user>
+{{-- <x-user>
     @push('css')
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -185,8 +185,7 @@
 
                                         <div class="tab-pane fade" id="liton_tab_1_4">
                                             <div class="ltn__myaccount-tab-content-inner">
-                                                {{-- <p>{{ __('sentence.the_following_addresses_will_be_used_on_the_checkout_page_by_default') }}.</p> --}}
-                                                <div class="ltn__form-box">
+                                                 <div class="ltn__form-box">
                                                     <form method="POST" action="{{ route('user.update.password') }}"
                                                         class="php-email-form" data-aos="fade-up"
                                                         data-aos-delay="200">
@@ -227,4 +226,81 @@
             </div>
         </div>
     </div>
-</x-user>
+</x-user> --}}
+<x-profile>
+
+    <form action="{{ route('user.update.name') }}" method="Post" class=" mt-0" data-aos="fade-up" data-aos-delay="200"
+        style="background-color: var(--surface-color);
+box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+padding: 30px;">
+        @csrf
+        <div class="row gy-4">
+            <div class="col-md-6">
+                <input type="text" name="name" class="form-control" value="{{ auth()->user()->name }}" required>
+            </div>
+            <div class="col-md-6">
+                <input type="text" name="last_name" class="form-control" value="{{ auth()->user()->last_name }}"
+                    required>
+            </div>
+
+            <div class="col-md-12">
+                <input type="email" class="form-control" name="email" value="{{ auth()->user()->email }}" readonly>
+            </div>
+            <div class="col-md-12">
+                <div class="input-group">
+                    <input type="password" class="form-control" name="password" placeholder="**********"
+                        aria-label="Password" disabled>
+                    <a class="btn btn-outline-danger rounded-0" id="button-addon2" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Update</a>
+                </div>
+            </div>
+            <div class="text-end">
+                <button type="submit" class="btn btn-danger">Submit</button>
+            </div>
+        </div>
+    </form>
+
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasRightLabel">Update Password</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <form action="{{ route('user.update.password') }}" method="POST">
+                @csrf
+                <div class="form-floating my-3">
+                    <input type="password" class="form-control @error('currentPassword') is-invalid @enderror"
+                        id="currentPassword" placeholder="Current Password" name="currentPassword" required>
+                    <label for="currentPassword">Current Password</label>
+                    @error('currentPassword')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-floating my-3">
+                    <input type="password" class="form-control @error('newPassword') is-invalid @enderror"
+                        id="newPassword" placeholder="New Password" name="newPassword" required>
+                    <label for="newPassword">New Password</label>
+                    @error('newPassword')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-floating my-3">
+                    <input type="password" class="form-control @error('newPassword_confirmation') is-invalid @enderror"
+                        id="newPassword_confirmation" placeholder="Confirm Password" name="newPassword_confirmation"
+                        required>
+                    <label for="newPassword_confirmation">Confirm Password</label>
+                    @error('newPassword_confirmation')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <button type="submit" class="btn btn-outline-danger">Update Password</button>
+            </form>
+
+
+        </div>
+    </div>
+</x-profile>

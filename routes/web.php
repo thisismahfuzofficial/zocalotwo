@@ -83,6 +83,19 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/restaurant/recruitment/', 'recruitment')->name('restaurant.recruitment');
     Route::post('/contact/send', 'contactMail')->name('contact.mail');
     Route::post('/recrutment/send', 'recrutmentMail')->name('recrutment.mail');
+
+    /// new pages
+    Route::get('/order-online', 'OrderOnline')->name('page.order-online');
+    Route::post('/order/data', 'OrderOnlineData')->name('page.order-online-data');
+    Route::get('/order/restaurants', 'OrderRestaurants')->name('order.restaurants');
+
+
+
+
+    // Route::get('/contact', 'contact')->name('contact');
+    // Route::get('/cart', 'cart')->name('cart');
+    // Route::get('/check-out', 'checkOut')->name('checkout');
+
 });
 
 //cart routes

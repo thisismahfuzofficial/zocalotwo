@@ -1,51 +1,140 @@
-<x-user>
-    <br><br><br>
-    <!-- Contact Section -->
-    <section id="contact" class="contact section bg-transparent">
+{{-- @extends('layouts.app')
 
-        <!-- Section Title -->
-        <!-- Section Title -->
-        <div class="container content mb-5  text-center" data-aos="fade-up">
-            <h2 class="text-colour">{{__('sentence.loginwithus')}}</h2>
-            <div class="d-flex gap-3 justify-content-center">
-                <p class="fst-italic"> {{__('sentence.donthaveaaccount')}} </p>
-                <a href="{{ route('register') }}">{{__('sentence.register')}} </a>
-            </div>
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Login') }}</div>
 
-        </div><!-- End Section Title -->
-
-
-        <div class="container d-flex justify-content-center align-items-center " style="min-height: 40vh;"
-            data-aos="fade-up" data-aos-delay="100">
-            <div class="row gy-4 w-100 justify-content-center ">
-                <div class="col-lg-6 ">
-                    <form action="{{ route('login') }}" method="post" class="php-email-form" data-aos="fade-up"
-                        data-aos-delay="200">
+                <div class="card-body">
+                    <form method="POST" action="{{ route('login') }}">
                         @csrf
-                        <div class="row gy-4">
-                            <div class="col-md-12">
-                                <input type="email" class="form-control" name="email" placeholder="{{__('sentence.youremail')}} "
-                                    required="">
+
+                        <div class="row mb-3">
+                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
-                            <div class="col-md-12">
-                                <input type="password" name="password" class="form-control" placeholder="{{__('sentence.password')}} "
-                                    required="">
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
-                            <div class="col-md-12 text-center">
-                                <button type="submit">{{__('sentence.login')}} </button>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6 offset-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+
+                                    <label class="form-check-label" for="remember">
+                                        {{ __('Remember Me') }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-0">
+                            <div class="col-md-8 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('Login') }}
+                                </button>
+
+                                @if (Route::has('password.request'))
+                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                        {{ __('Forgot Your Password?') }}
+                                    </a>
+                                @endif
                             </div>
                         </div>
                     </form>
-                </div><!-- End Contact Form -->
+                </div>
             </div>
         </div>
+    </div>
+</div>
+@endsection --}}
 
-        <div class="mt-4" data-aos="fade-up" data-aos-delay="100">
+<x-main>
+    <!-- Contact Section -->
+    <section id="contact" class="contact section">
 
-            <div class="d-flex gap-3 justify-content-center">
-                <p class="fst-italic">{{__('sentence.forgetpassword')}} </p>
-                <a href="{{ route('password.request') }}">{{__('sentence.clickhere')}} </a>
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+            {{-- <h2>Contact</h2> --}}
+            <p><span class="description-title">Login</span></p>
+            <div class="mt-3 text-center">
+                <div>Don't have a account ? <a href="{{ route('register') }}" class="fst-italic text-danger "><u>Register
+                            Here</u></a></div>
             </div>
+        </div><!-- End Section Title -->
+
+        <div class="container " data-aos="fade-up" data-aos-delay="100">
+            <div class="col-md-6 mx-auto">
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control @error('email') is-invalid @enderror"
+                            id="floatingInput" placeholder="name@example.com" name="email" value="{{ old('email') }}"
+                            required autocomplete="email" autofocus>
+                        <label for="floatingInput">Email address</label>
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control @error('password') is-invalid @enderror"
+                            id="floatingInput" placeholder="" name="password" required autocomplete="current-password">
+                        <label for="floatingInput">Password</label>
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-danger">Login</button>
+                    </div>
+                    <div class=" d-flex justify-content-center">
+                        <div class="form-check ">
+                            <input class="form-check-input" type="checkbox" name="remember" id="remember"
+                                {{ old('remember') ? 'checked' : '' }}>
+                            <label class="form-check-label" for="remember">
+                                {{ __('Remember Me') }}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mt-3 text-center">
+
+
+                        <p>Forget Password <a href="" class="fst-italic text-danger "><u>Click Here</u></a></p>
+                    </div>
+
+                </form>
+            </div>
+
+
+
         </div>
+
     </section><!-- /Contact Section -->
-</x-user>
+</x-main>

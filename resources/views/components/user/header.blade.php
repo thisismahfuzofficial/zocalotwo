@@ -73,7 +73,6 @@
                     <span class="fw-bold custom-cart  ">{{ Cart::getTotalQuantity() }}</span>
                 </a>
 
-
                 @if (auth()->check())
                     <a class="d-xl-block" href="{{ route('user.dashboard') }}">
                         <img class="cartIcon" src="{{ asset('icon/user.png') }}" alt="">

@@ -1,4 +1,4 @@
-<x-user>
+{{-- <x-user>
     @php
         $firstItem = Cart::getContent()->first();
         $restaurant = $firstItem ? App\Models\Restaurant::find($firstItem->attributes->restaurent) : null;
@@ -52,16 +52,99 @@
         </script>
 
 
-        {{-- <script>
-            function checkLoginStatus() {
-                @if (auth()->check())
-                    return true; // Allow form submission
-                @else
-                    alert('Please log in to proceed to checkout.');
-                    return false; // Prevent form submission
-                @endif
-            }
-        </script> --}}
+      
     @endpush
 
-</x-user>
+</x-user> --}}
+<x-main>
+    <!-- Contact Section -->
+    <section id="contact" class="contact section">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+            {{-- <h2>Contact</h2> --}}
+            <p><span class="description-title">Product Cart</span></p>
+        </div><!-- End Section Title -->
+
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+            <table class="table">
+                <tr class="align-middle">
+                    <th class="col-md-1 text-center">Product</th>
+                    <th class="col-2 text-center">Price</th>
+                    <th class="col-2 text-center">Quantity</th>
+                    <th class="col-2 text-center">Total</th>
+                </tr>
+                <tr class="align-middle ">
+                    <td class="text-center">
+                        <div class="position-relative d-inline-block">
+                            <img src="{{ asset('assets/img/menu/menu-item-4.png') }}" class="img-fluid " alt="">
+                            <button class="btn btn-sm btn-dark fw-bold position-absolute top-0 end-0 me-1 mt-1">
+                                <i class="bi bi-x"></i>
+                            </button>
+                        </div>
+                        <h3>Product name</h3>
+
+                    </td>
+                    <td class="text-center">
+                        <div class="text-success">$10.00</div>
+                    </td>
+                    <td class="text-center">
+                        <input type="number" class="form-control">
+                    </td>
+                    <td class="text-center">
+                        <div class="text-success">$10.00</div>
+                    </td>
+
+                </tr>
+                <tr class="align-middle ">
+                    <td class="text-center">
+                        <div class="position-relative d-inline-block">
+                            <img src="{{ asset('assets/img/menu/menu-item-5.png') }}" class="img-fluid " alt="">
+                            <button class="btn btn-sm btn-dark fw-bold position-absolute top-0 end-0 me-1 mt-1">
+                                <i class="bi bi-x"></i>
+                            </button>
+                        </div>
+                        <h3>Product name</h3>
+                    </td>
+                    <td class="text-center">
+                        <div class="text-success">$10.00</div>
+                    </td>
+                    <td class="text-center">
+                        <input type="number" class="form-control">
+                    </td>
+                    <td class="text-center">
+                        <div class="text-success">$10.00</div>
+                    </td>
+
+                </tr>
+                <tr class="align-middle ">
+                    <td class="text-center">
+                        <div class="position-relative d-inline-block">
+                            <img src="{{ asset('assets/img/menu/menu-item-6.png') }}" class="img-fluid " alt="">
+                            <button class="btn btn-sm btn-dark fw-bold position-absolute top-0 end-0 me-1 mt-1">
+                                <i class="bi bi-x"></i>
+                            </button>
+                        </div>
+                        <h3>Product name</h3>
+                    </td>
+                    <td class="text-center">
+                        <div class="text-success">$10.00</div>
+                    </td>
+                    <td class="text-center">
+                        <input type="number" class="form-control">
+                    </td>
+                    <td class="text-center">
+                        <div class="text-success">$10.00</div>
+                    </td>
+
+
+                </tr>
+            </table>
+            <div class="text-end">
+                <a href="" class="btn btn-danger ">Check Out</a>
+            </div>
+        </div>
+
+    </section><!-- /Contact Section -->
+
+</x-main>

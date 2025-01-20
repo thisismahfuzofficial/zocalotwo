@@ -20,6 +20,7 @@ class ProfileController extends Controller
 
     public function UpdateName(Request $request)
     {
+        dd($request->all());
         $id = Auth::user()->id;
         $user = User::find($id);
         $user->name = $request->name;
@@ -55,6 +56,12 @@ class ProfileController extends Controller
         }
     }
     public function updateProfile(){
-        return view('user-dashboard.update');
+    }
+    public function userOrderList(){
+        $id = auth()->user()->id;
+        $orders = Order::where('customer_id', $id)->latest()->paginate(10);
+        // dd($orders);
+        return view('user-dashboard.order-list',compact('orders'));
+
     }
 }

@@ -29,11 +29,14 @@ class PageController extends Controller
 {
     public function userIndex()
     {
-        $restaurants = Restaurant::latest()->take(6)->get();
-
-        $zones = Zone::with('restaurants')->get();
-        $sliders = Slider::all();
-        return view('user.home', compact('restaurants', 'zones', 'sliders'));
+        $categories = Category::whereNull('parent_id')
+            ->with('childs', 'products')
+            ->get();
+        $subCategories = Category::whereNotNull('parent_id')->get();
+        // $restaurants = Restaurant::latest()->take(6)->get();
+        // $zones = Zone::with('restaurants')->get();
+        // $sliders = Slider::all();
+        return view('user.home', compact('categories'));
     }
 
     private function getTimeRanges($restaurantId, $dayOfWeek)
@@ -122,7 +125,7 @@ class PageController extends Controller
     }
     public function userCheckout()
     {
-        if(Cart::getTotalQuantity() == 0){
+        if (Cart::getTotalQuantity() == 0) {
             return redirect(url('/'));
         }
         $restaurant = Restaurant::find(session()->get('restaurent_id'));
@@ -151,11 +154,11 @@ class PageController extends Controller
 
         return view('user.single-product', compact('product', 'restaurant', 'productOption'));
     }
-    public function restaurant()
-    {
-        $restaurants = Restaurant::all();
-        return view('user.restaurant', compact('restaurants'));
-    }
+    // public function restaurant()
+    // {
+    //     $restaurants = Restaurant::all();
+    //     return view('user.restaurant', compact('restaurants'));
+    // }
     public function contact()
     {
         $time_schedules = TimeSchedule::all();
@@ -177,10 +180,22 @@ class PageController extends Controller
     public function cart()
     {
         // dd(Cart::getContent());
+        $infoRestaurant = session('info_restaurant');
+        $latitude = $infoRestaurant['latitude'];
+        $longitude = $infoRestaurant['longitude'];
+        $restaurant = Restaurant::selectRaw("*, (6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude)))) AS distance", [$latitude, $longitude, $latitude])
+            ->orderBy('distance')
+            ->first();
+        $cart = session()->get('cart', []);
+        $totalPrice = 0;
+        $totalQuantity = 0;
 
+        foreach ($cart as $item) {
+            $totalPrice += $item['product_price'] * $item['quantity'];
+            $totalQuantity += $item['quantity']; // Summing up quantities
+        }
         if (Cart::getContent()->count() == 0) {
-
-            return redirect()->route('user.restaurants')->withErrors('hello');
+            return redirect()->route('page.order-online')->with('error', 'Please Complete Order Information');
         } else {
             $extras = Extra::latest()->where('type', 'cart')->get();
             $relatedProductsQuery = Product::whereHas('category', function ($q) {
@@ -195,11 +210,7 @@ class PageController extends Controller
                     'products' => $product,
                 ];
             });
-
-
-
-
-            return view('user.cart', compact('extras', 'relatedProducts'));
+            return view('user.cart', compact('extras', 'relatedProducts','restaurant'));
         }
     }
     public function checkLocation(Request $request)
@@ -333,7 +344,7 @@ class PageController extends Controller
         // Send the email with the attached file
         Mail::to('recrutement-centralsushi@hotmail.com')->send(new RecruitmentMail($data));
 
-        return back()->with('success',"{{ __('sentence.thank_you_for_contacting_us') }}");
+        return back()->with('success', "{{ __('sentence.thank_you_for_contacting_us') }}");
     }
 
     public function storeInSession(Request $request)
@@ -342,19 +353,19 @@ class PageController extends Controller
         if ($request->has('longitude')) {
             Session::put('longitude', $request->input('longitude'));
         }
-        
+
         if ($request->has('latitude')) {
             Session::put('latitude', $request->input('latitude'));
         }
-        
+
         if ($request->has('method')) {
             Session::put('method', $request->input('method'));
         }
-        
+
         if ($request->has('restaurant')) {
             Session::put('restaurant', $request->input('restaurant'));
         }
-        
+
         if ($request->has('address')) {
             Session::put('address', $request->input('address'));
         }
@@ -364,9 +375,9 @@ class PageController extends Controller
         if ($request->has('postalCode')) {
             Session::put('postalCode', $request->input('postalCode'));
         }
-        
+
         $restaurant = Restaurant::find($request->input('restaurant'));
-        return response()->json(['success' => true, 'restaurant'=>$restaurant]);
+        return response()->json(['success' => true, 'restaurant' => $restaurant]);
     }
 
 
@@ -382,5 +393,43 @@ class PageController extends Controller
         }
         Session::put('delivery_time', [$selectedTime]);
         return redirect()->back();
+    }
+
+    // new pages for
+
+    public function orderOnline()
+    {
+        return view('pages.user.order-online');
+    }
+    public function OrderOnlineData(Request $request)
+    {
+        session([
+            'info_restaurant' => [
+                'order_type' => $request->input('order_type'),
+                'delivery_time' => $request->input('delivery-time'),
+                'address' => $request->input('address'),
+                'latitude' => $request->input('latitude'),
+                'longitude' => $request->input('longitude'),
+            ],
+        ]);
+
+        return redirect(route('order.restaurants'))->with('success', 'Order and Delivery Time Selected');
+
+    }
+    public function OrderRestaurants()
+    {
+        $infoRestaurant = session('info_restaurant');
+        $latitude = $infoRestaurant['latitude'];
+        $longitude = $infoRestaurant['longitude'];
+
+        // Add the Haversine formula to calculate the distance
+        $restaurant = Restaurant::selectRaw("*, (6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude)))) AS distance", [$latitude, $longitude, $latitude])
+            ->orderBy('distance')
+            ->first(); // Get the closest restaurant
+        $categories = Category::whereNull('parent_id')
+            ->with('childs', 'products')
+            ->get();
+        $subCategories = Category::whereNotNull('parent_id')->get();
+        return view('pages.user.order-restaurants', compact('restaurant', 'categories', 'subCategories'));
     }
 }
