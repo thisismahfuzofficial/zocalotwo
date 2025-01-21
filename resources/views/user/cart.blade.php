@@ -1,4 +1,4 @@
-{{-- <x-user>
+<x-user>
     @php
         $firstItem = Cart::getContent()->first();
         $restaurant = $firstItem ? App\Models\Restaurant::find($firstItem->attributes->restaurent) : null;
@@ -55,8 +55,8 @@
 
     @endpush
 
-</x-user> --}}
-<x-main>
+</x-user>
+{{-- <x-main>
     <!-- Contact Section -->
     <section id="contact" class="contact section">
 
