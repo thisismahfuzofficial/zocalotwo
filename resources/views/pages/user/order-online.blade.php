@@ -129,46 +129,51 @@
         generateDeliveryTimes();
     </script>
 
-<script>
-    document.getElementById('getLocationBtn').addEventListener('click', function () {
-        const cityInput = document.getElementById('cityInput');
-        const latitudeInput = document.getElementById('latitudeInput');
-        const longitudeInput = document.getElementById('longitudeInput');
+    <script>
+        document.getElementById('getLocationBtn').addEventListener('click', function() {
+            const cityInput = document.getElementById('cityInput');
+            const latitudeInput = document.getElementById('latitudeInput');
+            const longitudeInput = document.getElementById('longitudeInput');
 
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                async function (position) {
-                    const { latitude, longitude } = position.coords;
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    async function(position) {
+                            const {
+                                latitude,
+                                longitude
+                            } = position.coords;
 
-                    // Store latitude and longitude in the hidden fields
-                    latitudeInput.value = latitude;
-                    longitudeInput.value = longitude;
+                            // Store latitude and longitude in the hidden fields
+                            latitudeInput.value = latitude;
+                            longitudeInput.value = longitude;
 
-                    // Use a reverse geocoding API to get the city and country
-                    const apiUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
-                    try {
-                        const response = await fetch(apiUrl);
-                        const data = await response.json();
+                            // Use a reverse geocoding API to get the city and country
+                            const apiUrl =
+                                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+                            try {
+                                const response = await fetch(apiUrl);
+                                const data = await response.json();
 
-                        // Extract city and country
-                        const city = data.address.city || data.address.town || data.address.village || "Unknown city";
-                        const country = data.address.country || "Unknown country";
+                                // Extract city and country
+                                const city = data.address.city || data.address.town || data.address.village ||
+                                    "Unknown city";
+                                const country = data.address.country || "Unknown country";
 
-                        // Set city and country in the visible input
-                        cityInput.value = `${city}, ${country}`;
-                    } catch (error) {
-                        console.error("Error fetching location details:", error);
-                        cityInput.value = "Unable to fetch location details.";
-                    }
-                },
-                function (error) {
-                    console.error(error);
-                    cityInput.value = "Unable to get location.";
-                }
-            );
-        } else {
-            cityInput.value = "Geolocation not supported by your browser.";
-        }
-    });
-</script>
+                                // Set city and country in the visible input
+                                cityInput.value = `${city}, ${country}`;
+                            } catch (error) {
+                                console.error("Error fetching location details:", error);
+                                cityInput.value = "Unable to fetch location details.";
+                            }
+                        },
+                        function(error) {
+                            console.error(error);
+                            cityInput.value = "Unable to get location.";
+                        }
+                );
+            } else {
+                cityInput.value = "Geolocation not supported by your browser.";
+            }
+        });
+    </script>
 </x-main>

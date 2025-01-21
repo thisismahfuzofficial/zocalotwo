@@ -87,7 +87,7 @@ class OrderController extends Controller
         $earnings = collect(Earnings::range(now()->subMonths(12), to: now())->graph('Month'))->groupBy('month')->map(fn($earning) => $earning->first());
 
 
- 
+
 
 
         if (count($earnings) > 0) {
@@ -125,7 +125,7 @@ class OrderController extends Controller
         }
          ksort($data['sales']);
          ksort($data['profit']);
-        
+
 
         return response()->json(['data' => $data]);
     }
@@ -139,58 +139,6 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->delivery_option === 'home_delivery') {
-
-            $longitude = session()->get('longitude');
-            $latitude = session()->get('latitude');
-
-            if ($longitude && $latitude) {
-                $restaurantId = session()->get('restaurent_id');
-
-                if (!$restaurantId) {
-                    return back()->withErrors(['error' => 'Restaurant not selected.']);
-                }
-
-                $restaurant = Restaurant::find($restaurantId);
-                if (!$restaurant) {
-                    return back()->withErrors(['error' => 'Restaurant not found.']);
-                }
-
-                $latitudeTo = $restaurant->latitude;
-                $longitudeTo = $restaurant->longitude;
-
-                $distance = $this->distanceService->haversineGreatCircleDistance(
-                    $latitude,
-                    $longitude,
-                    $latitudeTo,
-                    $longitudeTo
-                );
-                
-
-                if ($distance <= 2) {
-                    
-                    if (Cart::getTotal() < 15) {
-                        return back()->withErrors(['error' => 'Vous devez atteindre un minimum de 15€ de commande pour être livré à cette adresse']);
-                    }
-                } elseif ($distance <= 4) {
-                    
-                    if (Cart::getTotal() < 30) {
-                        return back()->withErrors(['error' => 'Vous devez atteindre un minimum de 30€ de commande pour être livré à cette adresse']);
-                    }
-                } elseif ($distance <= 6) {
-                   
-                    if (Cart::getTotal() < 50) {
-                        return back()->withErrors(['error' => 'Vous devez atteindre un minimum de 50€ de commande pour être livré à cette adresse']);
-                    }
-                }
-                
-                $allowed_distance = 7;
-                if ($distance > $allowed_distance) {
-                    return back()->withErrors(['error' => 'Unfortunately, we are unable to deliver to your location as it exceeds our delivery range. Our delivery service is currently limited to a radius of ' . $allowed_distance . ' kilometers from the restaurant. Please check your address and try again or choose a different restaurant closer to your location.']);
-                }
-            }
-        }
-
 
         if (Cart::getTotalQuantity() == 0) {
             return redirect(url('/'));
@@ -203,61 +151,65 @@ class OrderController extends Controller
 
         DB::beginTransaction();
 
-
-        $shipping = $request->only(['f_name', 'l_name', 'email', 'address', 'city', 'post_code', 'house', 'phone']);
-        $extra_charge = Settings::setting('extra.charge');
+        $firstItem = Cart::getContent()->last();
+        $restaurant = $firstItem ? Restaurant::find($firstItem->attributes->restaurent) : null;
+        $shipping = $request->only(['f_name', 'l_name', 'email', 'address', 'phone']);
+        $infoRestaurant = session('info_restaurant');
+        $orderType = $infoRestaurant['order_type'];
+        // dd($restaurant);
+        // $extra_charge = Settings::setting('extra.charge');
 
         $order = Order::create([
             'customer_id' => auth()->check() ? auth()->id() : null,
             'shipping_info' => json_encode($shipping),
             'sub_total' => Cart::getSubTotal(),
-            'total' => Cart::getTotal() + $extra_charge,
-            'tax' => Settings::totalTax(),
+            'total' => Cart::getTotal(),
+            // 'tax' => Settings::totalTax(),
             'comment' => $request->input('commment'),
-            'time_option' => $request->time_option,
+            'time_option' => $request->delivery_time,
             'payment_method' => $request->input('payment_method'),
-            'delivery_option' => $request->input('delivery_option'),
-            'restaurant_id' => session()->get('restaurent_id'),
+            'delivery_option' =>  $orderType,
+            'restaurant_id' => $restaurant->id,
         ]);
 
-        $extra = [];
-        foreach (Cart::getContent() as $item) {
-            if (isset($item->attributes['options'])) {
-                $options = $item->attributes['options'];
-            } else {
-                $options = null;
-            }
+        // $extra = [];
+        // foreach (Cart::getContent() as $item) {
+        //     if (isset($item->attributes['options'])) {
+        //         $options = $item->attributes['options'];
+        //     } else {
+        //         $options = null;
+        //     }
 
-            if (isset($item->attributes['product'])) {
-                $order->products()->attach($item->attributes['product']->id, [
-                    'quantity' => $item->quantity,
-                    'price' => $item->price,
-                    'options' => $options,
-                    'tax_amount' => Settings::itemTax($item->price, $item->attributes['tax'], $item->quantity),
-                    'tax_percentage' => $item->attributes['tax']
-                ]);
-            }
+        //     if (isset($item->attributes['product'])) {
+        //         $order->products()->attach($item->attributes['product']->id, [
+        //             'quantity' => $item->quantity,
+        //             'price' => $item->price,
+        //             'options' => $options,
+        //             'tax_amount' => Settings::itemTax($item->price, $item->attributes['tax'], $item->quantity),
+        //             'tax_percentage' => $item->attributes['tax']
+        //         ]);
+        //     }
 
-            if (isset($item->attributes['extra'])) {
-                $extra[] = [
-                    'id' => $item->id,
-                    'name' => $item->name,
-                    'price' => $item->price,
-                    'quantity' => $item->quantity,
-                    'tax_amount' => Settings::itemTax($item->price, $item->attributes['tax'], $item->quantity),
-                    'tax_percentage' => $item->attributes['tax']
-                ];
-            }
-        }
-        if (!empty($extra)) {
-            $order->update([
-                'extra' => json_encode($extra),
-            ]);
-        }
+        //     if (isset($item->attributes['extra'])) {
+        //         $extra[] = [
+        //             'id' => $item->id,
+        //             'name' => $item->name,
+        //             'price' => $item->price,
+        //             'quantity' => $item->quantity,
+        //             'tax_amount' => Settings::itemTax($item->price, $item->attributes['tax'], $item->quantity),
+        //             'tax_percentage' => $item->attributes['tax']
+        //         ];
+        //     }
+        // }
+        // if (!empty($extra)) {
+        //     $order->update([
+        //         'extra' => json_encode($extra),
+        //     ]);
+        // }
 
         DB::commit();
 
-        session()->forget(['current_location', 'delivery_time', 'restaurent_id', 'address', 'restaurant', 'method', 'longitude', 'latitude', 'city', 'postalCode']);
+        session()->forget('info_restaurant');
         Cart::clear();
 
 
@@ -357,7 +309,7 @@ class OrderController extends Controller
             return back()->withErrors('Please at least one item select');
         }
     }
-    
+
     public function mark_refund(Order $order)
     {
         // dd($order);

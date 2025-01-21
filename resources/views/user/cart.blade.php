@@ -72,7 +72,7 @@
                     <th class="col-md-1 text-center">Product</th>
                     <th class="col-2 text-center">Price</th>
                     <th class="col-2 text-center">Quantity</th>
-                    <th class="col-2 text-center">Total</th>
+                    <th class="col-2 text-end">Total</th>
                 </tr>
                 @foreach (Cart::getContent() as $item)
                     <tr class="align-middle ">
@@ -122,7 +122,7 @@
                             </form>
                         </td>
 
-                        <td class="text-center">
+                        <td class="text-end">
                             <div class="text-success">$ {{ number_format($item->price * $item->quantity, 2) }} </div>
                         </td>
 
@@ -130,7 +130,7 @@
                 @endforeach
             </table>
             <div class="text-end">
-                <a href="" class="btn btn-danger ">Check Out</a>
+                <a href="{{route('restaurant.checkout')}}" class="btn btn-danger ">Check Out</a>
             </div>
         </div>
 

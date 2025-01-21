@@ -125,26 +125,30 @@ class PageController extends Controller
     }
     public function userCheckout()
     {
-        if (Cart::getTotalQuantity() == 0) {
-            return redirect(url('/'));
-        }
-        $restaurant = Restaurant::find(session()->get('restaurent_id'));
+        // dd($infoRestaurant);
 
-        $restaurantId = $restaurant->id;
-        $currentTime = Carbon::now('Europe/Paris')->startOfMinute();
-        $dayOfWeek = $currentTime->dayOfWeek;
+        // $firstItem = Cart::getContent()->last();
+        // $restaurant = $firstItem ? Restaurant::find($firstItem->attributes->restaurent) : null;
 
-        $timeSlots = [];
-        $timeRanges = $this->getTimeRanges($restaurantId, $dayOfWeek);
+        // if (!$restaurant) {
+        //     return redirect(url('/'));
+        // }
 
-        foreach ((array) $timeRanges as $range) {
+        // $restaurantId = $restaurant->id;
+        // $currentTime = Carbon::now('Europe/Paris')->startOfMinute();
+        // $dayOfWeek = $currentTime->dayOfWeek;
 
-            $startTime = Carbon::createFromTimeString($range['start'], 'Europe/Paris');
-            $endTime = Carbon::createFromTimeString($range['end'], 'Europe/Paris');
-            $this->generateTimeSlots($startTime, $endTime, $currentTime, $timeSlots);
-        }
+        // $timeSlots = [];
+        // $timeRanges = $this->getTimeRanges($restaurantId, $dayOfWeek);
 
-        return view('user.checkout', compact('timeSlots'));
+        // foreach ((array) $timeRanges as $range) {
+
+        //     $startTime = Carbon::createFromTimeString($range['start'], 'Europe/Paris');
+        //     $endTime = Carbon::createFromTimeString($range['end'], 'Europe/Paris');
+        //     $this->generateTimeSlots($startTime, $endTime, $currentTime, $timeSlots);
+        // }
+
+        return view('user.checkout');
     }
 
     public function singleProduct($restaurant, Product $product)
@@ -416,7 +420,7 @@ class PageController extends Controller
         return redirect(route('order.restaurants'))->with('success', 'Order and Delivery Time Selected');
     }
     public function OrderRestaurants()
-    {   
+    {
         $infoRestaurant = session('info_restaurant');
         $latitude = $infoRestaurant['latitude'];
         $longitude = $infoRestaurant['longitude'];
