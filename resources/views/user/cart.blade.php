@@ -23,7 +23,7 @@
                 border-top-left-radius: 0 !important;
                 border-top-right-radius: 0 !important;
             }
-            
+
         </style>
         @livewireStyles
     @endpush
@@ -52,7 +52,7 @@
         </script>
 
 
-      
+
     @endpush
 
 </x-user> --}}
@@ -62,7 +62,7 @@
 
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
-            {{-- <h2>Contact</h2> --}}
+
             <p><span class="description-title">Product Cart</span></p>
         </div><!-- End Section Title -->
 
@@ -74,71 +74,60 @@
                     <th class="col-2 text-center">Quantity</th>
                     <th class="col-2 text-center">Total</th>
                 </tr>
-                <tr class="align-middle ">
-                    <td class="text-center">
-                        <div class="position-relative d-inline-block">
-                            <img src="{{ asset('assets/img/menu/menu-item-4.png') }}" class="img-fluid " alt="">
-                            <button class="btn btn-sm btn-dark fw-bold position-absolute top-0 end-0 me-1 mt-1">
-                                <i class="bi bi-x"></i>
-                            </button>
-                        </div>
-                        <h3>Product name</h3>
+                @foreach (Cart::getContent() as $item)
+                    <tr class="align-middle ">
+                        <td class="text-center">
+                            <div class="position-relative d-inline-block">
+                                <img src="{{ $product->image ?? '' }}" class="img-fluid " alt="">
+                                <a href="{{ url('/cart-destroy/' . $item->id) }}" class="btn btn-sm btn-dark fw-bold position-absolute top-0 end-0 me-1 mt-1">
+                                    <i class="bi bi-x"></i>
+                                </a>
+                            </div>
+                            <h3>Product name</h3>
 
-                    </td>
-                    <td class="text-center">
-                        <div class="text-success">$10.00</div>
-                    </td>
-                    <td class="text-center">
-                        <input type="number" class="form-control">
-                    </td>
-                    <td class="text-center">
-                        <div class="text-success">$10.00</div>
-                    </td>
+                        </td>
+                        <td class="text-center">
+                            <div class="text-success"> $ {{ number_format($item->price, 2) }}</div>
+                        </td>
+                        <td class="text-center">
+                            <form id="update-cart-form-{{ $item->id }}" method="post">
+                                <div class="cart-product-quantity d-flex justify-content-center">
+                                    <div class="cart-plus-minus d-flex ms-5 ps-5" style="border: 0px !important;">
+                                        <div class="btnWidth">
+                                            <!-- Decrease button -->
+                                            <button type="button"
+                                                class="dec decrease-btn qtybutton bg-transparent fw-bold fs-5"
+                                                style="border: 0px !important;"
+                                                onclick="updateQuantity('{{ $item->id }}', -1);">-</button>
+                                        </div>
 
-                </tr>
-                <tr class="align-middle ">
-                    <td class="text-center">
-                        <div class="position-relative d-inline-block">
-                            <img src="{{ asset('assets/img/menu/menu-item-5.png') }}" class="img-fluid " alt="">
-                            <button class="btn btn-sm btn-dark fw-bold position-absolute top-0 end-0 me-1 mt-1">
-                                <i class="bi bi-x"></i>
-                            </button>
-                        </div>
-                        <h3>Product name</h3>
-                    </td>
-                    <td class="text-center">
-                        <div class="text-success">$10.00</div>
-                    </td>
-                    <td class="text-center">
-                        <input type="number" class="form-control">
-                    </td>
-                    <td class="text-center">
-                        <div class="text-success">$10.00</div>
-                    </td>
+                                        <div class="btnWidth w-25">
+                                            <!-- Quantity input -->
+                                            <input type="text" value="{{ $item->quantity }}" name="quantity"
+                                                class="cart-plus-minus-box quantityMobil2 w-75 text-center"
+                                                id="product_quantity_{{ $item->id }}" min="1" placeholder="0"
+                                                data-price="{{ $item->price }}" data-name="{{ $item->name }}"
+                                                readonly>
+                                        </div>
 
-                </tr>
-                <tr class="align-middle ">
-                    <td class="text-center">
-                        <div class="position-relative d-inline-block">
-                            <img src="{{ asset('assets/img/menu/menu-item-6.png') }}" class="img-fluid " alt="">
-                            <button class="btn btn-sm btn-dark fw-bold position-absolute top-0 end-0 me-1 mt-1">
-                                <i class="bi bi-x"></i>
-                            </button>
-                        </div>
-                        <h3>Product name</h3>
-                    </td>
-                    <td class="text-center">
-                        <div class="text-success">$10.00</div>
-                    </td>
-                    <td class="text-center">
-                        <input type="number" class="form-control">
-                    </td>
-                    <td class="text-center">
-                        <div class="text-success">$10.00</div>
-                    </td>
+                                        <div class="btnWidth">
+                                            <!-- Increase button -->
+                                            <button type="button"
+                                                class="inc increase-btn qtybutton bg-transparent fw-bold fs-5"
+                                                style="border: 0px !important;"
+                                                onclick="updateQuantity('{{ $item->id }}', 1);">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </td>
 
+                        <td class="text-center">
+                            <div class="text-success">$ {{ number_format($item->price * $item->quantity, 2) }} </div>
+                        </td>
 
-                </tr>
+                    </tr>
+                @endforeach
             </table>
             <div class="text-end">
                 <a href="" class="btn btn-danger ">Check Out</a>
@@ -147,4 +136,34 @@
 
     </section><!-- /Contact Section -->
 
+    @push('js')
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+        <script>
+            function updateQuantity(productId, change) {
+                let quantityInput = document.getElementById(`product_quantity_${productId}`);
+                let currentQuantity = parseInt(quantityInput.value);
+
+                let newQuantity = currentQuantity + change;
+                if (newQuantity < 1) return;
+                quantityInput.value = newQuantity;
+
+                $.ajax({
+                    url: "{{ route('cart.update') }}",
+                    method: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        product_id: productId,
+                        quantity: newQuantity,
+                    },
+                    success: function(response) {
+                        console.log(response.message);
+                    },
+                    error: function(xhr) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+        </script>
+    @endpush
 </x-main>

@@ -37,16 +37,16 @@
   ======================================================== -->
 </head>
 
-<body class="index-page">   
+<body class="index-page">
 
     <x-layouts.header />
-    
+
     <main class="main">
         {{$slot}}
     </main>
-    
+
     <x-layouts.footer />
-  
+
 
     <!-- Scroll Top -->
     <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
@@ -65,6 +65,7 @@
 
     <!-- Main JS File -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    @stack('js')
 
 </body>
 

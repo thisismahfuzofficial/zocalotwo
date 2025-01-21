@@ -14,35 +14,10 @@ class CartController extends Controller
 
 	public function add(Request $request)
 	{
-		// dd($request->all());
+        $product = Product::find($request->product_id);
+		$price = $product->price;
 
-		$product = Product::find($request->product_id);
-
-		if (!$product) {
-			return back()->withErrors('Product not found.');
-		}
-		if ($request->has('option_id')) {
-			$option = ProductOption::find($request->option_id);
-			$price = $option->option_price;
-			$name = $product->name;
-			$option_name = $option->option_name;
-		} else {
-			$price = $product->price;
-			$name = $product->name;
-			$option_name = '';
-		}
-		// if (session()->has('restaurent_id') && session('restaurent_id') !== $request->restaurent_id) {
-
-		// 	return back()->with('error', 'Veuillez sélectionner un produit du même restaurant');
-		// }
-
-		Session::put('restaurent_id', $request->restaurent_id);
-		
-		$RandomNumber =  rand(9999, 999999);
-
-		Cart::add($product->id . $RandomNumber, $name, $price, $request->quantity, ['restaurent' => $request->restaurent_id, 'tax' => $product->tax, 'product' => $product, 'options' => $request->options . '' . $option_name]);
-
-
+		Cart::add($product->id, $product->name, $price, $request->quantity, ['restaurent' => $request->restaurent_id]);
 
 		return back();
 	}
@@ -57,8 +32,6 @@ class CartController extends Controller
 			),
 
 		));
-
-
 		return redirect()->back();
 	}
 	public function destroy($id)
