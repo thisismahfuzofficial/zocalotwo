@@ -492,7 +492,7 @@
                                             @endforeach
                                         </select> --}}
 
-                                        <select id="delivery-time" name="delivery_time" class="form-control">
+                                        <select id="delivery-time" class="form-select border-0 bg-light"></select>
                                         </select>
                                     </div>
 
@@ -593,66 +593,66 @@
         </section><!-- /Contact Section -->
 
         @push('js')
-            <script>
-                document.addEventListener("DOMContentLoaded", function() {
-                    function generateDeliveryTimes() {
-                        const select = document.getElementById("delivery-time");
-                        if (!select) return;
+        
 
-                        select.innerHTML = "";
-
-                        const now = new Date();
-                        const minutes = now.getMinutes();
-                        const roundedMinutes = minutes <= 30 ? 30 : 60;
-                        now.setMinutes(roundedMinutes, 0, 0);
-
-                        const startTime = new Date(now);
-                        const endTime = new Date();
-                        endTime.setHours(24, 0, 0, 0);
-
-                        const asapOption = document.createElement("option");
-                        asapOption.value = `asap(${formatTime(startTime)})`;
-                        asapOption.textContent = `ASAP (${formatTime(startTime)})`;
-                        select.appendChild(asapOption);
-
-                        let delivery_time = "{{ trim($delivery_time) }}";
-                        console.log(delivery_time);
-                        console.log('{{ json_encode(trim($delivery_time)) }}' == 'time(11:00 pm)');
-
-                        let currentTime = new Date(startTime);
-                        if ("{{ trim($delivery_time) }}".trim() === 'time(11:00 pm)'.trim()) {
-                            console.log('Match');
-                        } else {
-                            console.log('No match');
-                        }
-                        while (currentTime <= endTime) {
-                            const option = document.createElement("option");
-                            option.value = `time(${formatTime(currentTime)})`;
-                            option.textContent = formatTime(currentTime);
-                            console.log(`time(${formatTime(currentTime)})`);
-                            if (`time(${formatTime(currentTime)})` == '{!! $delivery_time !!}') {
-                                option.selected = true;
-                                console.log('selected');
-                            }
-                            select.appendChild(option);
-                            currentTime.setMinutes(currentTime.getMinutes() + 30);
-                        }
-
-                        select.value = asapOption.value;
-                    }
-
-                    function formatTime(date) {
-                        const hours = date.getHours();
-                        const minutes = date.getMinutes();
-                        const ampm = hours >= 12 ? "pm" : "am";
-                        const formattedHours = hours % 12 || 12;
-                        const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-                        return `${formattedHours}:${formattedMinutes} ${ampm}`;
-                    }
-
-                    generateDeliveryTimes();
-                });
-            </script>
+        <script>
+            // Fetch the delivery time from server-side data
+            const preSelectedTime = @json($infoRestaurant['delivery_time'] ?? null);
+        
+            // Function to generate time options
+            function generateDeliveryTimes(preSelectedTime = null) {
+                const select = document.getElementById("delivery-time");
+                const now = new Date();
+        
+                // Round current time to the nearest 30 minutes
+                const minutes = now.getMinutes();
+                const roundedMinutes = minutes <= 30 ? 30 : 60; // Round up to the next half-hour
+                now.setMinutes(roundedMinutes, 0, 0);
+        
+                const startTime = now; // Start time is now (rounded)
+                const endTime = new Date(); // End time is 12:00 AM
+                endTime.setHours(24, 0, 0, 0);
+        
+                // Add the "ASAP" option
+                const asapOption = document.createElement("option");
+                asapOption.value = `asap(${formatTime(startTime)})`;
+                asapOption.textContent = `ASAP (${formatTime(startTime)})`;
+                select.appendChild(asapOption);
+        
+                // Generate time slots in 30-minute intervals
+                let currentTime = new Date(startTime);
+                while (currentTime <= endTime) {
+                    const option = document.createElement("option");
+                    option.value = `time(${formatTime(currentTime)})`;
+                    option.textContent = formatTime(currentTime);
+                    select.appendChild(option);
+        
+                    currentTime.setMinutes(currentTime.getMinutes() + 30);
+                }
+        
+                // Set the selected value
+                if (preSelectedTime) {
+                    select.value = preSelectedTime;
+                } else {
+                    select.value = `asap(${formatTime(startTime)})`;
+                }
+            }
+        
+            // Helper function to format time as "h:mm am/pm"
+            function formatTime(date) {
+                const hours = date.getHours();
+                const minutes = date.getMinutes();
+                const ampm = hours >= 12 ? "pm" : "am";
+                const formattedHours = hours % 12 || 12;
+                const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+                return `${formattedHours}.${formattedMinutes} ${ampm}`;
+            }
+        
+            // Generate the delivery times with the pre-selected value
+            generateDeliveryTimes(preSelectedTime);
+        </script>
+        
+        
         @endpush
 
 
