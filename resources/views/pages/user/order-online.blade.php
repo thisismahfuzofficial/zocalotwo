@@ -60,6 +60,7 @@
                             <!-- Hidden input for latitude and longitude -->
                             <input id="latitudeInput" type="hidden" name="latitude">
                             <input id="longitudeInput" type="hidden" name="longitude">
+                            <input id="postalCodeInput" type="hidden" name="postal_code">   
                             <div class="col-1 px-1 border-start text-center btn" id="getLocationBtn">
                                 <i class="bi bi-geo-alt"></i>
                             </div>
@@ -129,51 +130,49 @@
         generateDeliveryTimes();
     </script>
 
-    <script>
-        document.getElementById('getLocationBtn').addEventListener('click', function() {
-            const cityInput = document.getElementById('cityInput');
-            const latitudeInput = document.getElementById('latitudeInput');
-            const longitudeInput = document.getElementById('longitudeInput');
+<script>
+    document.getElementById('getLocationBtn').addEventListener('click', function () {
+        const cityInput = document.getElementById('cityInput');
+        const latitudeInput = document.getElementById('latitudeInput');
+        const longitudeInput = document.getElementById('longitudeInput');
+        const postalCodeInput = document.getElementById('postalCodeInput');
 
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    async function(position) {
-                            const {
-                                latitude,
-                                longitude
-                            } = position.coords;
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                async function (position) {
+                    const { latitude, longitude } = position.coords;
 
-                            // Store latitude and longitude in the hidden fields
-                            latitudeInput.value = latitude;
-                            longitudeInput.value = longitude;
+                    // Store latitude and longitude in the hidden fields
+                    latitudeInput.value = latitude;
+                    longitudeInput.value = longitude;
 
-                            // Use a reverse geocoding API to get the city and country
-                            const apiUrl =
-                                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
-                            try {
-                                const response = await fetch(apiUrl);
-                                const data = await response.json();
+                    // Use a reverse geocoding API to get location details
+                    const apiUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+                    try {
+                        const response = await fetch(apiUrl);
+                        const data = await response.json();
 
-                                // Extract city and country
-                                const city = data.address.city || data.address.town || data.address.village ||
-                                    "Unknown city";
-                                const country = data.address.country || "Unknown country";
+                        // Extract city, country, and postal code
+                        const city = data.address.city || data.address.town || data.address.village || "Unknown city";
+                        const country = data.address.country || "Unknown country";
+                        const postalCode = data.address.postcode || "Unknown postal code";
 
-                                // Set city and country in the visible input
-                                cityInput.value = `${city}, ${country}`;
-                            } catch (error) {
-                                console.error("Error fetching location details:", error);
-                                cityInput.value = "Unable to fetch location details.";
-                            }
-                        },
-                        function(error) {
-                            console.error(error);
-                            cityInput.value = "Unable to get location.";
-                        }
-                );
-            } else {
-                cityInput.value = "Geolocation not supported by your browser.";
-            }
-        });
-    </script>
+                        // Set values in inputs
+                        cityInput.value = `${city}, ${country}`;
+                        postalCodeInput.value = postalCode;
+                    } catch (error) {
+                        console.error("Error fetching location details:", error);
+                        cityInput.value = "Unable to fetch location details.";
+                    }
+                },
+                function (error) {
+                    console.error(error);
+                    cityInput.value = "Unable to get location.";
+                }
+            );
+        } else {
+            cityInput.value = "Geolocation not supported by your browser.";
+        }
+    });
+</script>
 </x-main>

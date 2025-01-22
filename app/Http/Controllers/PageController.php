@@ -125,8 +125,7 @@ class PageController extends Controller
     }
     public function userCheckout()
     {
-        // dd($infoRestaurant);
-
+        $infoRestaurant = session('info_restaurant');
         // $firstItem = Cart::getContent()->last();
         // $restaurant = $firstItem ? Restaurant::find($firstItem->attributes->restaurent) : null;
 
@@ -148,7 +147,7 @@ class PageController extends Controller
         //     $this->generateTimeSlots($startTime, $endTime, $currentTime, $timeSlots);
         // }
 
-        return view('user.checkout');
+        return view('user.checkout',compact('infoRestaurant'));
     }
 
     public function singleProduct($restaurant, Product $product)
@@ -416,7 +415,6 @@ class PageController extends Controller
                 'longitude' => $request->input('longitude'),
             ],
         ]);
-
         return redirect(route('order.restaurants'))->with('success', 'Order and Delivery Time Selected');
     }
     public function OrderRestaurants()
@@ -424,7 +422,6 @@ class PageController extends Controller
         $infoRestaurant = session('info_restaurant');
         $latitude = $infoRestaurant['latitude'];
         $longitude = $infoRestaurant['longitude'];
-
         // Add the Haversine formula to calculate the distance
         $restaurant = Restaurant::selectRaw("*, (6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude)))) AS distance", [$latitude, $longitude, $latitude])
             ->orderBy('distance')
