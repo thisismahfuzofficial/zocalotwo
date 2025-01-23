@@ -90,7 +90,8 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/order/restaurants', 'OrderRestaurants')->name('order.restaurants');
 
 
-
+    Route::get('/orders/payment/{order}', [PaymentController::class, 'showPaymentGateway'])->name('user.orders.payment.index');
+    Route::post('/orders/payment/complete/{order}', [PaymentController::class, 'completePayment'])->name('user.orders.payment.complete');
 
     // Route::get('/contact', 'contact')->name('contact');
     // Route::get('/cart', 'cart')->name('cart');

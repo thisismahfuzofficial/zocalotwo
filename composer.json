@@ -19,7 +19,8 @@
         "maatwebsite/excel": "^3.1",
         "milon/barcode": "^10.0",
         "php-flasher/flasher-laravel": "^1.15",
-        "rogervila/array-diff-multidimensional": "^2.1"
+        "rogervila/array-diff-multidimensional": "^2.1",
+        "stripe/stripe-php": "^16.4"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.9",
