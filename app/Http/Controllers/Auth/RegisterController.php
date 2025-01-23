@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -87,13 +88,23 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        // dd($data);
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'l_name' => $data['last_name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'role_id' => $data['role'],
         ]);
+
+        $orders = Order::where('email',  $user->email)->whereNull('customer_id')->get();
+        if ($orders->count() > 0) {
+            foreach ($orders as $order) {
+                $order->update([
+                    'customer_id' => $user->id,
+                ]);
+            }
+        }
+
+       return $user;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\DuePaidMail;
+use App\Mail\OrderConfirmationMail;
 use App\Models\Order;
 use App\Models\Restaurant;
 use App\Models\Transaction;
@@ -117,14 +118,14 @@ class OrderController extends Controller
 
             foreach ($months as $month) {
 
-                $data['sales'][$month] = $earnings[array_search($month,$months)]['sales'] ?? 0;
-                $data['profit'][$month] = $earnings[array_search($month,$months)]['total_profit'] ?? 0;
+                $data['sales'][$month] = $earnings[array_search($month, $months)]['sales'] ?? 0;
+                $data['profit'][$month] = $earnings[array_search($month, $months)]['total_profit'] ?? 0;
             }
         } else {
             $data = ['sales' => [], 'profit' => []];
         }
-         ksort($data['sales']);
-         ksort($data['profit']);
+        ksort($data['sales']);
+        ksort($data['profit']);
 
 
         return response()->json(['data' => $data]);
@@ -132,7 +133,9 @@ class OrderController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create() {}
+    public function create()
+    {
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -162,13 +165,14 @@ class OrderController extends Controller
         $order = Order::create([
             'customer_id' => auth()->check() ? auth()->id() : null,
             'shipping_info' => json_encode($shipping),
+            'email' => $request->email,
             'sub_total' => Cart::getSubTotal(),
             'total' => Cart::getTotal(),
             // 'tax' => Settings::totalTax(),
             'comment' => $request->input('commment'),
             'time_option' => $request->delivery_time,
             'payment_method' => $request->input('payment_method'),
-            'delivery_option' =>  $orderType,
+            'delivery_option' => $orderType,
             'restaurant_id' => $restaurant->id,
         ]);
 
@@ -212,8 +216,18 @@ class OrderController extends Controller
         session()->forget('info_restaurant');
         Cart::clear();
 
+        if ($order->payment_method == 'Card') {
+            return redirect()->route('user.orders.payment.index', $order);
+        } else {
+            $emails = array_filter([json_decode($order->shipping_info)->email, $order->restaurent->email]);
 
-        return Payment::make($order);
+            foreach ($emails as $email) {
+                if (!empty($email)) {
+                    Mail::to($email)->send(new OrderConfirmationMail($order));
+                }
+            }
+            return redirect()->route('thank_you')->with('success', 'Order has been successfully completed.');
+        }
     }
 
 

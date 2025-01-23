@@ -1,8 +1,11 @@
 <!-- resources/views/payment.blade.php -->
 <x-main>
+    @php
+        $shipping_info = json_decode($order->shipping_info, true) ?? [];
+    @endphp
     <div class="container mb-4">
         <h2 class="my-4">Payment</h2>
-        <form action="{{ route('dashboard.orders.payment.complete', $order) }}" method="POST" id="payment">
+        <form action="{{ route('user.orders.payment.complete', $order) }}" method="POST" id="payment">
             @csrf
             <input type="hidden" name="payment_id" id="payment_id">
             <!-- Order Summary -->
@@ -11,10 +14,10 @@
                     Order Summary
                 </div>
                 <div class="card-body">
+                    {{-- @dd($order) --}}
                     <p><strong>Order:</strong> #{{ $order->id ?? 'N/A' }}</p>
-                    <p><strong>Price:</strong> ${{ number_format($order->total_price, 2) }}</p>
-                    <p><strong>Shipping Address:</strong> {{ $order->shippingAddress->address_line_1 }},
-                        {{ $order->shippingAddress->city }}, {{ $order->shippingAddress->country }}</p>
+                    <p><strong>Price:</strong> ${{ number_format($order->total, 2) }}</p>
+                    <p><strong>Shipping Address:</strong> {{ $shipping_info['address'] }}</p>
                 </div>
             </div>
             <div class="">
@@ -76,12 +79,13 @@
 
 
 
-    @push('js')
+    {{-- @push('js') --}}
         <script src="https://js.stripe.com/v3/"></script>
         <script>
             (function() {
                 // Create a Stripe client.
-                var stripe = Stripe("{{ setting('site.stripe_key') }}");
+
+                var stripe = Stripe("pk_test_51Qk8N9P0HfV4CtGoHP6gWwI7FnmRLvGhI8tDKjo88tFerFGoNrq29a28mPi4AYL9Pva2WNMKzhb3UEETnxMei6HW00b70Wn2rE");
                 // Create an instance of Elements.
                 var elements = stripe.elements();
                 // Custom styling can be passed to options when creating an Element.
@@ -147,6 +151,6 @@
                 }
             })();
         </script>
-    @endpush
+    {{-- @endpush --}}
 
 </x-main>
