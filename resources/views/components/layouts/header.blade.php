@@ -17,7 +17,7 @@
 
             <ul>
                 <li><a href="{{ route('restaurant.home') }}" class="active">Home<br></a></li>
-                <li><a href="#">Restaurants</a></li>
+                <li><a href="{{route('user.restaurants')}}">Restaurants</a></li>
                 <li><a href="#">Our Chefs</a></li>
                 <li><a href="#">Catering</a></li>
                 <li><a href="#">Contact</a></li>

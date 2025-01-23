@@ -80,6 +80,15 @@
                                                     </div>
                                                 </div>
                                                 <div class="prf_data_row" data-editable>
+                                                    <div class="label">{{ __('sentence.addess') }}</div>
+                                                    <div class="input">
+                                                        <input type="text"
+                                                            value="{{ Settings::setting('site.address') ? Settings::setting('site.address') : 'site address' }}"
+                                                            placeholder="Site Address" class=""
+                                                            name="site_address">
+                                                    </div>
+                                                </div>
+                                                <div class="prf_data_row" data-editable>
                                                     <div class="label">{{ __('sentence.sitenumber') }}</div>
                                                     <div class="input">
                                                         <input type="text"
@@ -120,7 +129,8 @@
                                                     <div class="input">
                                                         <input type="text"
                                                             value="{{ Settings::setting('tiktok.link') ? Settings::setting('tiktok.link') : 'tiktok link' }}"
-                                                            placeholder="tiktok link" class="" name="tiktok_link">
+                                                            placeholder="tiktok link" class=""
+                                                            name="tiktok_link">
                                                     </div>
                                                 </div>
                                                 <div class="prf_data_row" data-editable>
@@ -142,15 +152,14 @@
                                                             name="extra_charge">
                                                     </div>
                                                 </div>
-                                               
+
                                                 <div class="prf_data_row" data-editable>
                                                     <div class="label">The Map</div>
                                                     <div class="input">
                                                         {{-- @dd(Settings::setting('extra.charge')) --}}
                                                         <input type="text"
                                                             value="{{ Settings::setting('pdf.file') ? Settings::setting('pdf.file') : 'The Map' }}"
-                                                            placeholder="The Map" class=""
-                                                            name="pdf_file">
+                                                            placeholder="The Map" class="" name="pdf_file">
                                                     </div>
                                                 </div>
 
@@ -173,54 +182,60 @@
                                             <div class="form-group col-md-4">
                                                 <label for="laft">Laft Image (1080x1920)</label>
                                                 <input type="file" class="form-control" name="laft">
-                                               
+
                                                 <div class="mt-2" style="width: 120px; height: auto;">
-                                                    <img src="{{ Storage::url(Settings::setting('slide.laft')) }}" alt="">
+                                                    <img src="{{ Storage::url(Settings::setting('slide.laft')) }}"
+                                                        alt="">
                                                 </div>
 
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label for="laft-top">Laft Top Image (1920x1080)</label>
                                                 <input type="file" class="form-control" name="laft-top">
-                                                
+
                                                 <div class="mt-2" style="width: 120px; height: auto;">
-                                                    <img src="{{ Storage::url(Settings::setting('slide.laft_top')) }}" alt="">
+                                                    <img src="{{ Storage::url(Settings::setting('slide.laft_top')) }}"
+                                                        alt="">
                                                 </div>
 
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label for="laft-bottom">Laft bottom Image (1080x1920)</label>
                                                 <input type="file" class="form-control" name="laft-bottom">
-                                                
+
                                                 <div class="mt-2" style="width: 120px; height: auto;">
-                                                    <img src="{{ Storage::url(Settings::setting('slide.laft_bottom')) }}" alt="">
+                                                    <img src="{{ Storage::url(Settings::setting('slide.laft_bottom')) }}"
+                                                        alt="">
                                                 </div>
 
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label for="right">Right Image (1080x1920)</label>
                                                 <input type="file" class="form-control" name="right">
-                                                
+
                                                 <div class="mt-2" style="width: 120px; height: auto;">
-                                                    <img src="{{ Storage::url(Settings::setting('slide.right')) }}" alt="">
+                                                    <img src="{{ Storage::url(Settings::setting('slide.right')) }}"
+                                                        alt="">
                                                 </div>
 
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label for="right-top">Right Top Image (1080x1920)</label>
                                                 <input type="file" class="form-control" name="right-top">
-                                                
+
                                                 <div class="mt-2" style="width: 120px; height: auto;">
-                                                    <img src="{{ Storage::url(Settings::setting('slide.right_top')) }}" alt="">
+                                                    <img src="{{ Storage::url(Settings::setting('slide.right_top')) }}"
+                                                        alt="">
                                                 </div>
 
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label for="right-bottom">Right bottom Image (1920x1080)</label>
                                                 <input type="file" class="form-control" name="right-bottom">
-                                                
+
                                                 <div class="mt-2" style="width: 120px; height: auto;">
-                                                    <img src="{{ Storage::url(Settings::setting('slide.right_bottom')) }}" alt="">
+                                                    <img src="{{ Storage::url(Settings::setting('slide.right_bottom')) }}"
+                                                        alt="">
                                                 </div>
 
                                             </div>

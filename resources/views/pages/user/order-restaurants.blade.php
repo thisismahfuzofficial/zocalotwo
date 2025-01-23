@@ -1,4 +1,15 @@
 <x-main>
+    <style>
+        .accordion-button:focus {
+            box-shadow: none !important;
+            /* Removes focus shadow */
+        }
+
+        .accordion-button:not(.collapsed) {
+            box-shadow: none !important;
+            /* Removes active shadow */
+        }
+    </style>
     <!-- Contact Section -->
     <section id="contact" class="contact section">
         <!-- Section Title -->
@@ -131,6 +142,7 @@
                                                                 </h4> --}}
                                                                     <div class="d-flex gap-3 justify-content-center">
                                                                         <div class="price-container">
+                                                                            <p>{{ $product->allergenes }}</p>
                                                                             <h3 class=" price text-danger">
                                                                                 {{ Settings::price($product->price) }}
                                                                             </h3>
@@ -144,23 +156,24 @@
                                                                                     value="1">
                                                                                 <input type="hidden" name="product_id"
                                                                                     value="{{ $product->id }}">
-                                                                                <input type="hidden" name="product_price"
+                                                                                <input type="hidden"
+                                                                                    name="product_price"
                                                                                     value="{{ $product->price }}">
                                                                                 <input type="hidden"
                                                                                     name="restaurent_id"
-                                                                                    value="{{ $restaurant->id }}">  
+                                                                                    value="{{ $restaurant->id }}">
                                                                                 @if ($product->status == 1)
                                                                                     <button type="submit"
-                                                                                        class="text-colour btn"
-                                                                                        style="background:#e5d5bf !important; color: #000 !important; font-size: 10px !important; ">
+                                                                                        class="bg-danger btn text-light"
+                                                                                        style="font-size: 10px !important; ">
                                                                                         <i
-                                                                                            class="bi bi-plus"></i>{{ __('sentence.add') }}</button>
+                                                                                            class="bi bi-plus"></i>Add</button>
                                                                                 @else
                                                                                     <button disabled
-                                                                                        class="text-colour btn"
-                                                                                        style="background:#e5d5bf !important; color: #000 !important; font-size: 10px !important; ">
+                                                                                        class="bg-danger btn text-light"
+                                                                                        style=" font-size: 10px !important; ">
                                                                                         <i
-                                                                                            class="bi bi-plus"></i>{{ __('sentence.out_of_stock') }}</button>
+                                                                                            class="bi bi-plus"></i>Out of Stock</button>
                                                                                 @endif
                                                                             </form>
 

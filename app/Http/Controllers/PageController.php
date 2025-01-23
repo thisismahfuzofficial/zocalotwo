@@ -157,11 +157,12 @@ class PageController extends Controller
 
         return view('user.single-product', compact('product', 'restaurant', 'productOption'));
     }
-    // public function restaurant()
-    // {
-    //     $restaurants = Restaurant::all();
-    //     return view('user.restaurant', compact('restaurants'));
-    // }
+    public function restaurant()
+    {
+        $restaurants = Restaurant::all();
+        // dd($restaurants);
+        return view('user.restaurant', compact('restaurants'));
+    }
     public function contact()
     {
         $time_schedules = TimeSchedule::all();
@@ -432,4 +433,5 @@ class PageController extends Controller
         $subCategories = Category::whereNotNull('parent_id')->get();
         return view('pages.user.order-restaurants', compact('restaurant', 'categories', 'subCategories'));
     }
+
 }

@@ -18,13 +18,13 @@ class SettingController extends Controller
     {
 
 
-        return view('pages.settings.update',);
+        return view('pages.settings.update', );
     }
 
 
 
     public function updateSettings(Request $request)
-    {
+{   
         Cache::flush();
         // Validate the form data
         $request->validate([
@@ -40,6 +40,7 @@ class SettingController extends Controller
         Setting::where('key', 'site.subtitle')->update(['value' => $request->input('site_subtitle')]);
         // Update the site email
         Setting::where('key', 'site.email')->update(['value' => $request->input('site_email')]);
+        Setting::where('key', 'site.address')->update(['value' => $request->input('site_address')]);
         // Update the site phone
         Setting::where('key', 'site.phone')->update(['value' => $request->input('site_phone')]);
         // Update the facebook link
