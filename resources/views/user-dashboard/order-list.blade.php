@@ -14,7 +14,7 @@
                     <td>{{ $order->created_at->format('d-M-Y') }}, </td>
                     <td>{{ $order->time_option }}</td>
                     <td>{{ $order->total }}€</td>
-                    <td><a href="" class="btn btn-danger">View</a></td>
+                    <td><a href="{{ route('invoice', $order) }}" class="btn btn-danger">View</a></td>
                 </tr>
             @endforeach
 
