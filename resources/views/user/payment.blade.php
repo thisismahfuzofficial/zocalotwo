@@ -34,11 +34,11 @@
             <div class="card mb-4 rounded-0 shadow p-3 border-0">
                 <h2 class="my-4 fw-bold text-danger">Card Info</h2>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="name" readonly>
+                    <input type="text" class="form-control" value="{{$shipping_info['f_name'].' ' .$shipping_info['l_name']}}" id="floatingInput" placeholder="name" readonly>
                     <label for="floatingInput">Name</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
+                    <input type="email" class="form-control" value="{{$shipping_info['email']}}" id="floatingInput" placeholder="name@example.com"
                         readonly>
                     <label for="floatingInput">Email address</label>
                 </div>

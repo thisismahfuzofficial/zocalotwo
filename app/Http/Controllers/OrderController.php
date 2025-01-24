@@ -173,40 +173,14 @@ class OrderController extends Controller
             'restaurant_id' => $restaurant->id,
         ]);
 
-        // $extra = [];
-        // foreach (Cart::getContent() as $item) {
-        //     if (isset($item->attributes['options'])) {
-        //         $options = $item->attributes['options'];
-        //     } else {
-        //         $options = null;
-        //     }
-
-        //     if (isset($item->attributes['product'])) {
-        //         $order->products()->attach($item->attributes['product']->id, [
-        //             'quantity' => $item->quantity,
-        //             'price' => $item->price,
-        //             'options' => $options,
-        //             'tax_amount' => Settings::itemTax($item->price, $item->attributes['tax'], $item->quantity),
-        //             'tax_percentage' => $item->attributes['tax']
-        //         ]);
-        //     }
-
-        //     if (isset($item->attributes['extra'])) {
-        //         $extra[] = [
-        //             'id' => $item->id,
-        //             'name' => $item->name,
-        //             'price' => $item->price,
-        //             'quantity' => $item->quantity,
-        //             'tax_amount' => Settings::itemTax($item->price, $item->attributes['tax'], $item->quantity),
-        //             'tax_percentage' => $item->attributes['tax']
-        //         ];
-        //     }
-        // }
-        // if (!empty($extra)) {
-        //     $order->update([
-        //         'extra' => json_encode($extra),
-        //     ]);
-        // }
+        foreach (Cart::getContent() as $item) {
+            if ($item->quantity > 0) { // Ensure quantity is greater than 0
+                $order->products()->attach($item['id'], [ // Pass the product ID
+                    'quantity' => $item['quantity'],
+                    'price' => $item['price'],
+                ]);
+            }
+        }
 
         DB::commit();
 
