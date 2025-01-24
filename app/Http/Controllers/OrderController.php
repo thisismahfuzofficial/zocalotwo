@@ -159,9 +159,6 @@ class OrderController extends Controller
         $shipping = $request->only(['f_name', 'l_name', 'email', 'address', 'phone']);
         $infoRestaurant = session('info_restaurant');
         $orderType = $infoRestaurant['order_type'];
-        // dd($restaurant);
-        // $extra_charge = Settings::setting('extra.charge');
-
         $order = Order::create([
             'customer_id' => auth()->check() ? auth()->id() : null,
             'shipping_info' => json_encode($shipping),
