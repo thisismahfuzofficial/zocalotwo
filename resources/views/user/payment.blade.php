@@ -101,20 +101,12 @@
     </div>
 
 
-
-    {{-- @push('js') --}}
     <script src="https://js.stripe.com/v3/"></script>
     <script>
         (function() {
-            // Create a Stripe client.
 
-            var stripe = Stripe(
-                "pk_test_51Qk8N9P0HfV4CtGoHP6gWwI7FnmRLvGhI8tDKjo88tFerFGoNrq29a28mPi4AYL9Pva2WNMKzhb3UEETnxMei6HW00b70Wn2rE"
-            );
-            // Create an instance of Elements.
+            var stripe = Stripe(env('STRIPE_PUBLIC_KEY'));
             var elements = stripe.elements();
-            // Custom styling can be passed to options when creating an Element.
-            // (Note that this demo uses a wider set of styles than the guide below.)
             var style = {
                 base: {
                     color: '#32325d',
@@ -132,14 +124,11 @@
                     iconColor: '#fa755a'
                 }
             };
-            // Create an instance of the card Element.
             var card = elements.create('card', {
                 style: style,
                 hidePostalCode: true
             });
-            // Add an instance of the card Element into the `card-element` <div>.
             card.mount('#card-element');
-            // Handle real-time validation errors from the card Element.
             card.addEventListener('change', function(event) {
                 var displayError = document.getElementById('card-errors');
                 if (event.error) {
@@ -148,21 +137,16 @@
                     displayError.textContent = '';
                 }
             });
-            // Handle form submission.
             var form = document.getElementById('payment');
             form.addEventListener('submit', function(event) {
-                event.preventDefault();
-                // Disable the submit button to prevent repeated clicks
+                event.preventDefault();s
                 document.getElementById('complete-order').disabled = true;
                 stripe.createToken(card).then(function(result) {
                     if (result.error) {
-                        // Inform the user if there was an error.
                         var errorElement = document.getElementById('card-errors');
                         errorElement.textContent = result.error.message;
-                        // Enable the submit button
                         document.getElementById('complete-order').disabled = false;
                     } else {
-                        // Send the token to your server.
                         stripeTokenHandler(result.token);
 
                     }
@@ -176,6 +160,5 @@
             }
         })();
     </script>
-    {{-- @endpush --}}
 
 </x-main>

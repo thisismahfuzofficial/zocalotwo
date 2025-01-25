@@ -66,7 +66,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Auth::routes();
-
+// https://youtu.be/e3h0KVyypvk?si=Mz7GqdNLEv6doNE4
 //user routes
 
 Route::controller(PageController::class)->group(function () {
