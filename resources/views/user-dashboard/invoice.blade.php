@@ -1,7 +1,7 @@
-@php
+{{-- @php
     $extras = json_decode($order->extra, true) ?? [];
     $restaurant = App\Models\Restaurant::find($order->products()->first()->pivot->restaurant_id);
-@endphp
+@endphp --}}
 {{-- @dd($extras) --}}
 <x-user>
     @push('css')
@@ -96,7 +96,7 @@
                                         </tr>
                                     </thead>
                                     <tbody style="border: 1px solid #ba321c !important;">
-                                        {{-- @dd($order ) --}}
+                                        {{-- @dd($order->products ) --}}
                                         @foreach ($order->products as $product)
                                             <tr class="text-center">
                                                 <th class="bg-transparent text-center text-light  " scope="row">
@@ -121,25 +121,7 @@
                                                 </td>
                                             </tr>
                                         @endforeach
-                                        @foreach ($extras as $item)
-                                            <tr>
-                                                <th class="bg-transparent text-center text-light " scope="row">
-                                                    {{ $item['id'] }}</th>
-                                                <td class="bg-transparent text-center text-light ">
-                                                    <div>
-                                                        <h5 class="text-truncate font-size-14 mb-1 text-light">{{ $item['name'] }}
-                                                        </h5>
-                                                        {{-- <p class="text-muted mb-0">{{ $product->category->name }}</p> --}}
-                                                    </div>
-                                                </td>
-                                                <td class="bg-transparent text-center text-light ">
-                                                    {{ $item['quantity'] }}</td>
-                                                <td class="text-end text-center bg-transparent text-light ">
-                                                    {{ Settings::price($item['price']) }}</td>
-                                                <td class="text-end text-center bg-transparent text-light ">
-                                                    {{ Settings::price($item['price'] * $item['quantity']) }}</td>
-                                            </tr>
-                                        @endforeach
+
                                         <tr>
                                             <th scope="row" colspan="4"
                                                 class="text-end bg-transparent text-light ">{{ __('sentence.sub_total') }}</th>

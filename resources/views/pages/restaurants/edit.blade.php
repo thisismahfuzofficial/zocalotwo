@@ -60,13 +60,9 @@
 
                 </div>
                 <div class="col-md-4">
-                    <div class="card ">
+                    {{-- <div class="card ">
                         <div class="card-body">
                             <div class="row row-cols-2">
-                                {{-- <x-form.input id="longitude" name="address[longitude]" value="{{$restaurant->address['longitude']}}" wire:model="longitude"
-                                    label="Longitude" required />
-                                <x-form.input id="latitude" name="address[latitude]" value="{{$restaurant->address['latitude']}}" wire:model="latitude"
-                                    label="Latitude"  required /> --}}
                                 <x-form.input id="merchantId" name="merchantId"
                                     label="{{ __('sentence.merchant_id') }}" value="{{ @$api_key['merchantId'] }}"
                                     required />
@@ -83,16 +79,10 @@
                                         value="{{ $restaurant->enable_payment }}" value="1" />
                                 </div>
                             </div>
-                            
-
-
-                            {{-- <button class="btn btn-success" type="submit" style="float: right">
-                                <i class="fa fa-save"></i> {{ __('sentence.save') }}
-                            </button> --}}
                         </div>
-                    </div>
+                    </div> --}}
 
-                    <div class="card mt-3">
+                    {{-- <div class="card mt-3">
                         <div class="card-body">
                             <div class="row row-cols-2">
                                 <x-form.input id="sid" name="sid" label="SID"
@@ -142,8 +132,8 @@
                             </div>
 
                         </div>
-                    </div>
-                    <div class="card mt-3 mb-3">
+                    </div> --}}
+                    {{-- <div class="card mt-3 mb-3">
                         <div class="card-body">
                             <div class="row row-cols-2">
                                 <div class="mb-2">
@@ -167,9 +157,9 @@
                                         label="{{ __('sentence.restaurent_code') }} *" autofocus required />
                                 </div>
                             </div>
-                            
+
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="card mt-3 mb-3">
                         <div class="card-body">
                             <div class="row row-cols-2">
@@ -184,6 +174,11 @@
                                         label="Longitude" autofocus />
                                 </div>
                             </div>
+                            <div class="d-flex align-items-end">
+                                <x-form.input type="checkbox" id="enable_payment" name="enable_payment"
+                                    label="{{ __('sentence.enable_printer') }}" :checked="$restaurant->enable_payment"
+                                    value="{{ $restaurant->enable_payment }}" value="1" />
+                            </div>
                             <button class="btn btn-success" type="submit" style="float: right">
                                 <i class="fa fa-save"></i> {{ __('sentence.save') }}
                             </button>
@@ -194,7 +189,7 @@
             </div>
         </div>
     </form>
-    <div class="container">
+    {{-- <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="card mb-4">
@@ -220,6 +215,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 </x-layout>

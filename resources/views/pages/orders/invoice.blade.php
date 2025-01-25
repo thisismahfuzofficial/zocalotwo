@@ -1,8 +1,8 @@
-@php
+{{-- @php
     $extras = json_decode($order->extra, true) ?? [];
-    // $restaurant = App\Models\Restaurant::find($order->products()->first()->pivot->restaurant_id);
+    $restaurant = App\Models\Restaurant::find($order->products()->first()->pivot->restaurant_id);
 
-@endphp
+@endphp --}}
 {{-- @dd($extras) --}}
 <x-layout>
     <div class="container mt-3">
@@ -10,8 +10,8 @@
             <div class="col-lg-8">
                 <button onclick="printDiv('printableArea')" class="btn btn-success me-1 mb-2"><i
                         class="fa fa-print me-2"></i>{{ __('sentence.print') }}</button>
-                <a href="{{auth()->user()->role_id == 3 ? route('resto_orders.expedy.print',$order) : route('orders.expedy.print',$order)}}" class="btn btn-success me-1 mb-2"><i
-                        class="fa fa-print me-2"></i> {{ __('sentence.expedy_print') }}</a>
+                {{-- <a href="{{auth()->user()->role_id == 3 ? route('resto_orders.expedy.print',$order) : route('orders.expedy.print',$order)}}" class="btn btn-success me-1 mb-2"><i
+                        class="fa fa-print me-2"></i> {{ __('sentence.expedy_print') }}</a> --}}
                 <div class="card" id="printableArea">
                     <div class="card-body">
 
@@ -86,7 +86,7 @@
                                                         <h5 class="text-truncate font-size-14 mb-1">
                                                             {{ $product->name }}
                                                         </h5>
-                                                        <p class="text-muted mb-0">{{ __('sentence.categoty') }}: {{ $product->category->name }} 
+                                                        <p class="text-muted mb-0">{{ __('sentence.categoty') }}: {{ $product->category->name }}
                                                             @if ( $product->pivot->options )
                                                             {{ __('sentence.options') }}: {{ $product->pivot->options }}
                                                             @endif
@@ -101,14 +101,14 @@
                                                 </td>
                                             </tr>
                                         @endforeach
-                                        @foreach ($extras as $item)
+                                        {{-- @foreach ($extras as $item)
                                             <tr>
                                                 <th scope="row">{{ $item['id'] }}</th>
                                                 <td>
                                                     <div>
                                                         <h5 class="text-truncate font-size-14 mb-1">{{ $item['name'] }}
                                                         </h5>
-                                                        {{-- <p class="text-muted mb-0">{{ $product->category->name }}</p> --}}
+
                                                     </div>
                                                 </td>
                                                 <td>{{ $item['quantity'] }}</td>
@@ -117,7 +117,7 @@
                                                 <td class="text-end">
                                                     {{ Settings::price($item['price'] * $item['quantity']) }}</td>
                                             </tr>
-                                        @endforeach
+                                        @endforeach --}}
                                         {{-- @dd(Settings::price($order->sub_total)) --}}
                                         <tr>
                                             <th scope="row" colspan="4" class="text-end">{{ __('sentence.sub_total') }}</th>
