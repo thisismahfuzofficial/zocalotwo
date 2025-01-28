@@ -183,6 +183,9 @@ class PageController extends Controller
 
     public function cart()
     {
+        if (Cart::getContent() === null || Cart::getContent()->count() == 0) {
+            return redirect()->route('page.order-online')->with('error', 'Please Complete Order Information');
+        }
         // dd(Cart::getContent());
         $infoRestaurant = session('info_restaurant');
         $latitude = $infoRestaurant['latitude'];

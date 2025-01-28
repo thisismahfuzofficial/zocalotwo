@@ -56,7 +56,7 @@ class PaymentController extends Controller
         $shipping = json_decode($order->shipping_info ?? '', true);
 
         // $stripe = setting('site.stripe_secret_key');
-        $stripe = 'sk_test_51Qk8N9P0HfV4CtGoaa2TlgqDmVdtkTBTgkQnRbOTYgsz08w9k1LMSrclT0FYxfh1gxptaFynhkITVBbQNXH997rA00A9UpfOrR';
+        $stripe = env('STRIPE_SECRET_KEY');
 
         $amount = intval($order->total * 100);
         // dd($amount);
