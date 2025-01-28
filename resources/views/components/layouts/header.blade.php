@@ -17,24 +17,25 @@
 
             <ul>
                 <li><a href="{{ route('restaurant.home') }}" class="active">Home<br></a></li>
-                <li><a href="{{route('user.restaurants')}}">Restaurants</a></li>
-                <li><a href="#">Our Chefs</a></li>
+                <li><a href="{{ route('user.restaurants') }}">Restaurants</a></li>
+                <li><a href="{{ route('page.chef') }}">Our Chefs</a></li>
                 <li><a href="#">Catering</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="{{route('restaurant.contact')}}">Contact</a></li>
 
                 <a class="btn-getstarted d-block" href="{{ route('page.order-online') }}">Order Online</a>
                 @auth
-                    
+
                     <li class="d-none d-md-block"><a href="{{ route('user.dashboard') }}"><i
                                 class="bi bi-person-circle fs-5"></i></a></li>
                 @else
-                    
                     <li class="d-none d-md-block"><a href="{{ route('login') }}"><i
                                 class="bi bi-person-circle fs-5"></i></a></li>
                 @endauth
 
                 <li class="d-none d-md-block">
-                    <a class="position-relative d-inline-block" href="{{ route('restaurant.cart') }}" style="text-decoration: none;">
+                    <a class="position-relative d-inline-block"
+                        href="{{ Cart::getTotalQuantity() > 0 ? route('restaurant.cart') : route('page.order-online') }}"
+                        style="text-decoration: none;">
                         <i class="bi bi-bag fs-5 bg-light"></i>
                         <span
                             class="fw-bold custom-cart position-absolute top-0 start-100 translate-middle badge bg-danger">
@@ -42,6 +43,7 @@
                         </span>
                     </a>
                 </li>
+
 
                 <li class="d-block d-md-none"><a href="#">Cart : <span class="badge bg-danger">0</span></a></li>
                 <li class="d-block d-md-none"><a href="#">Profile</a></li>

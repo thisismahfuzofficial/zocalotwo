@@ -79,6 +79,7 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/cart', 'cart')->name('restaurant.cart');
     Route::post('/check-location', 'checkLocation')->name('check.location');
     Route::get('/thank-you', 'thank_you')->name('thank_you');
+    Route::get('/chefs', 'chef')->name('page.chef');
     Route::get('/pages/{page}', 'pageView')->name('pages.view');
     Route::get('/restaurant/recruitment/', 'recruitment')->name('restaurant.recruitment');
     Route::post('/contact/send', 'contactMail')->name('contact.mail');

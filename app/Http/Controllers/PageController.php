@@ -433,5 +433,8 @@ class PageController extends Controller
         $subCategories = Category::whereNotNull('parent_id')->get();
         return view('pages.user.order-restaurants', compact('restaurant', 'categories', 'subCategories'));
     }
-
+    public function chef()
+    {
+        return view('user.chef');
+    }
 }

@@ -25,6 +25,16 @@ class SettingTableSeeder extends Seeder
             ]
         );
         $setting = Setting::firstOrCreate(
+            ['key' => 'site.address'],
+            [
+                'display_name' => 'name site-address',
+                'value' => 'value site address',
+                'details' => '',
+
+                'group' => 'Site',
+            ]
+        );
+        $setting = Setting::firstOrCreate(
             ['key' => 'site.subtitle'],
             [
                 'display_name' => 'name site-subtitle',

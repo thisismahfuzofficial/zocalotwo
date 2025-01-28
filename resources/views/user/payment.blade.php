@@ -9,53 +9,59 @@
             @csrf
             <input type="hidden" name="payment_id" id="payment_id">
             <!-- Order Summary -->
-            <div class="card mb-4 rounded-0 shadow p-3 border-0">
-                <h3 class="fw-bold text-danger container">
-                    Order Summary
-                </h3>
-                <div class="card-body">
-                    <table class="table">
-                        <tr>
-                            <th>Order :</th>
-                            <td> #{{ $order->id ?? 'N/A' }}</td>
-                        </tr>
-                        <tr>
-                            <th>Price :</th>
-                            <td> ${{ number_format($order->total, 2) }}</td>
-                        </tr>
-                        <tr>
-                            <th>Shipping Address :</th>
-                            <td> #{{ $shipping_info['address'] }}</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            <div class="card mb-4 rounded-0 shadow p-3 border-0">
-                <h2 class="my-4 fw-bold text-danger">Card Info</h2>
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" value="{{$shipping_info['f_name'].' ' .$shipping_info['l_name']}}" id="floatingInput" placeholder="name" readonly>
-                    <label for="floatingInput">Name</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="email" class="form-control" value="{{$shipping_info['email']}}" id="floatingInput" placeholder="name@example.com"
-                        readonly>
-                    <label for="floatingInput">Email address</label>
-                </div>
-
-                <div class="border rounded px-3 mb-3">
-                    <div id="card-element" class="mt-3 mb-3">
-                        <!-- Elements will create input elements here -->
+            <div class="row align-items-stretch">
+                <div class="col-md-6">
+                    <div class="card mb-4 rounded-0 shadow p-3 border-0 h-100">
+                        <h3 class="fw-bold text-danger container">
+                            Order Summary
+                        </h3>
+                        <div class="card-body">
+                            <table class="table">
+                                <tr>
+                                    <th>Order :</th>
+                                    <td>#{{ $order->id ?? 'N/A' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Price :</th>
+                                    <td>${{ number_format($order->total, 2) }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Shipping Address :</th>
+                                    <td>{{ $shipping_info['address'] }}</td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
-                    <!-- We'll put the error messages in this element -->
-                    <div id="card-errors" role="alert"></div>
                 </div>
-                <div class="form-group  text-end">
-                    <button class="btn btn-danger" id="complete-order" type="submit">Pay Now</button>
+                <div class="col-md-6">
+                    <div class="card mb-4 rounded-0 shadow p-3 border-0 h-100">
+                        <h2 class="my-4 fw-bold text-danger">Card Info</h2>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control"
+                                value="{{ $shipping_info['f_name'] . ' ' . $shipping_info['l_name'] }}"
+                                id="floatingInput" placeholder="name" readonly>
+                            <label for="floatingInput">Name</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" value="{{ $shipping_info['email'] }}"
+                                id="floatingInput" placeholder="name@example.com" readonly>
+                            <label for="floatingInput">Email address</label>
+                        </div>
+            
+                        <div class="border rounded px-3 mb-3">
+                            <div id="card-element" class="mt-3 mb-3">
+                                <!-- Elements will create input elements here -->
+                            </div>
+                            <!-- We'll put the error messages in this element -->
+                            <div id="card-errors" role="alert"></div>
+                        </div>
+                        <div class="form-group text-end">
+                            <button class="btn btn-danger" id="complete-order" type="submit">Pay Now</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-
+            
             <!-- Payment Method Selection -->
             {{-- <div class="card mb-4">
                 <div class="card-header">

@@ -1,13 +1,12 @@
 <footer id="footer" class="footer dark-background">
-
     <div class="container">
         <div class="row gy-3">
-            <div class="col-lg-3 col-md-6 d-flex">
+            <div class="col-lg-3 col-md-6 d-flex ">
                 <i class="bi bi-geo-alt icon"></i>
                 <div class="address">
                     <h4>Address</h4>
-                    <p>A108 Adam Street</p>
-                    <p>New York, NY 535022</p>
+                    <p>{{ Settings::setting('site.address') ? Settings::setting('site.address') : 'site address' }}</p>
+
                     <p></p>
                 </div>
 
@@ -18,13 +17,15 @@
                 <div>
                     <h4>Contact</h4>
                     <p>
-                        <strong>Phone:</strong> <span>+1 5589 55488 55</span><br>
-                        <strong>Email:</strong> <span>info@example.com</span><br>
+                        <strong>Phone:</strong>
+                        <span>{{ Settings::setting('site.phone') ? Settings::setting('site.phone') : 'site phone' }}</span><br>
+                        <strong>Email:</strong>
+                        <span>{{ Settings::setting('site.email') ? Settings::setting('site.email') : 'site email' }}</span><br>
                     </p>
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-6 d-flex">
+            {{-- <div class="col-lg-3 col-md-6 d-flex">
                 <i class="bi bi-clock icon"></i>
                 <div>
                     <h4>Opening Hours</h4>
@@ -33,31 +34,25 @@
                         <strong>Sunday</strong>: <span>Closed</span>
                     </p>
                 </div>
-            </div>
+            </div> --}}
 
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-3">
+                
+            </div>
+            <div class="col-lg-3 col-md-6 ">
                 <h4>Follow Us</h4>
                 <div class="social-links d-flex">
-                    <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
-                    <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                    <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                    <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                    <a href="https://twitter.com/chefonwheels11" class="twitter"><i class="bi bi-twitter-x"></i></a>
+                    <a href="https://www.facebook.com/TacoZocalo" class="facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="https://www.instagram.com/tacozocalo/" class="instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="https://www.tripadvisor.com/Restaurant_Review-g58120-d13820298-Reviews-Taco_Zocalo-Reston_Fairfax_County_Virginia.html" class="linkedin"><i class="bi bi-arrows-move"></i></a>
+                    <a href="https://www.yelp.com/biz/taco-zocalo-ashburn" class="linkedin"><i class="bi bi-arrows-move"></i></a>
                 </div>
             </div>
 
         </div>
     </div>
 
-    <div class="container copyright text-center mt-4">
-        <p>© <span>Copyright</span> <strong class="px-1 sitename">Yummy</strong> <span>All Rights Reserved</span>
-        </p>
-        <div class="credits">
-            <!-- All the links in the footer should remain intact. -->
-            <!-- You can delete the links only if you've purchased the pro version. -->
-            <!-- Licensing information: https://bootstrapmade.com/license/ -->
-            <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-        </div>
-    </div>
+   
 
 </footer>
