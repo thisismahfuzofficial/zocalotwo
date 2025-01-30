@@ -126,26 +126,7 @@ class PageController extends Controller
     public function userCheckout()
     {
         $infoRestaurant = session('info_restaurant');
-        // $firstItem = Cart::getContent()->last();
-        // $restaurant = $firstItem ? Restaurant::find($firstItem->attributes->restaurent) : null;
-
-        // if (!$restaurant) {
-        //     return redirect(url('/'));
-        // }
-
-        // $restaurantId = $restaurant->id;
-        // $currentTime = Carbon::now('Europe/Paris')->startOfMinute();
-        // $dayOfWeek = $currentTime->dayOfWeek;
-
-        // $timeSlots = [];
-        // $timeRanges = $this->getTimeRanges($restaurantId, $dayOfWeek);
-
-        // foreach ((array) $timeRanges as $range) {
-
-        //     $startTime = Carbon::createFromTimeString($range['start'], 'Europe/Paris');
-        //     $endTime = Carbon::createFromTimeString($range['end'], 'Europe/Paris');
-        //     $this->generateTimeSlots($startTime, $endTime, $currentTime, $timeSlots);
-        // }
+       
 
         return view('user.checkout',compact('infoRestaurant'));
     }
@@ -417,6 +398,7 @@ class PageController extends Controller
                 'address' => $request->input('address'),
                 'latitude' => $request->input('latitude'),
                 'longitude' => $request->input('longitude'),
+                'postal_code' => $request->input('postal_code'),
             ],
         ]);
         return redirect(route('order.restaurants'))->with('success', 'Order and Delivery Time Selected');

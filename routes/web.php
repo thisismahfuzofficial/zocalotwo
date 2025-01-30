@@ -121,9 +121,9 @@ Route::patch('/time-update', [PageController::class, 'updateTime'])->name('time_
 Route::get('/get-google-maps-api-key', function () {
     return response()->json(config('services.google_maps.api_key'));
 });
-// Route::get('/test', function () {
-//     return view('test');
-// });
+Route::get('/test', function () {
+    dd('hit');
+});
 
 // Route::get('/testProduct', function () {
 //     $order = Order::latest()->first();
@@ -248,3 +248,6 @@ Route::get('test-email', [PaymentController::class, 'email']);
 Route::get('test-printer', [ExpedyController::class, 'sendToPrinter']);
 
 Route::post('api/reports', action: [ApiController::class, 'reports'])->middleware(['auth', 'role:1,3']);
+Route::get('/test', function () {
+   return view('layouts.OrderMail');
+});

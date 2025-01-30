@@ -83,7 +83,7 @@
                                                     <div class="label">{{ __('sentence.addess') }}</div>
                                                     <div class="input">
                                                         <input type="text"
-                                                            value="{{ Settings::setting('site.address') ? Settings::setting('site.address') : 'site address' }}"
+                                                            value=""
                                                             placeholder="Site Address" class=""
                                                             name="site_address">
                                                     </div>
