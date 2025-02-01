@@ -36,6 +36,7 @@ class RestaurantController extends Controller
         $validated = $request->validate([
             'name' => 'required|string',
         ]);
+       
         $api_key = [
             'merchantId' => $request->merchantId,
             'secretKey' => $request->secretKey,
@@ -49,6 +50,7 @@ class RestaurantController extends Controller
         $restaurant->number = $request->number;
 
         $restaurant->address = $request->address;
+        $restaurant->post_codes = $request->post_codes;
 
         $restaurant->api_key = json_encode($api_key);
         $restaurant->key_version = $request->key_version;
@@ -115,6 +117,7 @@ class RestaurantController extends Controller
             'email' => $request->email,
             'number' => $request->number,
             'address' => $request->address,
+            'post_codes' => $request->post_codes,
             'delivery_option' => $request->delivery_option,
             // 'status' => $request->status,
             'vat_number' => $request->vat_number,

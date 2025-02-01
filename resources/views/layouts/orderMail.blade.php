@@ -147,8 +147,6 @@
                                 style="background-color: #5f1818; display: flex;align-items: center;justify-content: center;width: 100%;">
                                 <td class="header-logo" style="padding: 10px 32px;">
                                     <span style="display: block; text-align: left;">
-                                        {{-- <img src="{{ Settings::option('logo') ? Storage::url(Settings::option('logo')) : asset('images/logo.png') }}"
-                                            class="main-logo" alt="logo" width="60"> --}}
                                         <img style="height: 33px; width: auto;"
                                             src="{{ Settings::setting('site.logo') ? Storage::url(Settings::setting('site.logo')) : asset('logo/mainLogo.png') }}"
                                             class="main-logo" alt="logo">
@@ -175,13 +173,13 @@
                                         <tbody>
                                             <tr>
                                                 <td style="font-size: 15px; font-weight: 500">
-                                                    <span style="color: #fff">
+                                                    {{-- <span style="color: #fff">
                                                         Order By: <a href="https://zocalotwo.sohojware.com/"
                                                             style="color: #387ADF"
                                                             target="_blank">{{ $order->restaurent->name }}</a>,
                                                         Email: <a href="mailto:{{ $order->restaurent->email }}"
                                                             style="color: #387ADF">{{ $order->restaurent->email }}</a>
-                                                    </span>
+                                                    </span> --}}
                                                 </td>
                                             </tr>
                                         </tbody>

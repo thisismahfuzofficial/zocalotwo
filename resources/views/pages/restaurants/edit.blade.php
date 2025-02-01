@@ -8,7 +8,7 @@
     <form action="{{ route('update.restaurant', $restaurant) }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="container mt-3">
-            <div class="row">
+            <div class="row d-flex justify-content-center">
                 <div class="col-md-8 mb-4">
                     <div class="card">
                         <div class="card-body">
@@ -39,9 +39,9 @@
 
                                 <x-form.input name="number" wire:model="number" value="{{ $restaurant->number }}"
                                     label="{{ __('sentence.restaurant_number') }}*" autofocus required />
+                                <x-form.input name="post_codes" wire:model="post_codes" value="{{ $restaurant->post_codes }}"
+                                    label="Post Codes*" autofocus required />
 
-                                    <x-form.input id="vat_number" name="vat_number" label="{{ __('sentence.vat_number') }}"
-                                value="{{ $restaurant->vat_number }}" required />
                             </div>
                             <div class="row row-cols">
                                 <x-form.input name="description" label="{{ __('sentence.description') }} *"
@@ -55,12 +55,15 @@
 
                             <div class="row row-cols-1 tox-editor-container" wire:ignore>
                             </div>
+                            <button class="btn btn-success" type="submit" style="float: right">
+                                <i class="fa fa-save"></i> {{ __('sentence.save') }}
+                            </button>
                         </div>
                     </div>
 
                 </div>
-                <div class="col-md-4">
-                    {{-- <div class="card ">
+                {{-- <div class="col-md-4">
+                    <div class="card ">
                         <div class="card-body">
                             <div class="row row-cols-2">
                                 <x-form.input id="merchantId" name="merchantId"
@@ -80,9 +83,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
 
-                    {{-- <div class="card mt-3">
+                    <div class="card mt-3">
                         <div class="card-body">
                             <div class="row row-cols-2">
                                 <x-form.input id="sid" name="sid" label="SID"
@@ -132,8 +135,8 @@
                             </div>
 
                         </div>
-                    </div> --}}
-                    {{-- <div class="card mt-3 mb-3">
+                    </div>
+                    <div class="card mt-3 mb-3">
                         <div class="card-body">
                             <div class="row row-cols-2">
                                 <div class="mb-2">
@@ -159,7 +162,7 @@
                             </div>
 
                         </div>
-                    </div> --}}
+                    </div>
                     <div class="card mt-3 mb-3">
                         <div class="card-body">
                             <div class="row row-cols-2">
@@ -174,18 +177,14 @@
                                         label="Longitude" autofocus />
                                 </div>
                             </div>
-                            <div class="d-flex align-items-end">
-                                <x-form.input type="checkbox" id="enable_payment" name="enable_payment"
-                                    label="{{ __('sentence.enable_printer') }}" :checked="$restaurant->enable_payment"
-                                    value="{{ $restaurant->enable_payment }}" value="1" />
-                            </div>
+                            
                             <button class="btn btn-success" type="submit" style="float: right">
                                 <i class="fa fa-save"></i> {{ __('sentence.save') }}
                             </button>
                         </div>
                     </div>
 
-                </div>
+                </div> --}}
             </div>
         </div>
     </form>

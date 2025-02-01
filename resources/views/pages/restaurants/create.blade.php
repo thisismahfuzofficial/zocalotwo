@@ -2,8 +2,8 @@
     <form action="{{ route('store.restaurant') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="container mt-3">
-            <div class="row">
-                <div class="col-md-8 mb-4">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-8 mb-4 ">
                     <div class="card">
                         <div class="card-body">
                             <h6 class="dash_head">{{ __('sentence.addrestaurant') }}</h6>
@@ -22,14 +22,18 @@
                             </div>
                             <div class="row row-cols-2  ">
                                 <x-form.input name="address[city]" wire:model="city"
-                                    label="{{ __('sentence.restaurant_city') }}*" autofocus required />
+                                    label="{{ __('sentence.restaurant_city') }} *" autofocus required />
                                 <x-form.input name="address[post_code]" wire:model="post_code"
                                     label="{{ __('sentence.restaurant_post_code') }}*" autofocus required />
                             </div>
                             <div class="row row-cols-2  ">
 
                                 <x-form.input name="number" wire:model="number"
-                                    label="{{ __('sentence.restaurant_number') }}*" autofocus required />
+                                    label="{{ __('sentence.restaurant_number') }} *" autofocus required />
+                                    
+                                <x-form.input name="post_codes" wire:model="post_codes"
+                                    label="Nearest Post Codes *" autofocus required />
+                                    
                             </div>
                             <div class="row row-cols">
                                 <x-form.input name="description" label="{{ __('sentence.description') }} *"
@@ -42,19 +46,24 @@
 
                             <div class="row row-cols-1 tox-editor-container" wire:ignore>
                             </div>
+                            <button class="btn btn-success" type="submit" style="float: right">
+                                <i class="fa fa-save"></i> {{ __('sentence.save') }}
+                            </button>
                         </div>
+
                     </div>
 
                 </div>
 
-                <div class="col-md-4">
+
+                {{-- <div class="col-md-4">
                     <div class="card ">
                         <div class="card-body">
                             <div class="row row-cols-2">
-                                {{-- <x-form.input id="longitude" name="address[longitude]" wire:model="longitude"
+                                <x-form.input id="longitude" name="address[longitude]" wire:model="longitude"
                                     label="Longitude" value="" required />
                                 <x-form.input id="latitude" name="address[latitude]" wire:model="latitude"
-                                    label="Latitude" value="" required /> --}}
+                                    label="Latitude" value="" required />
                                 <x-form.input id="merchantId" name="merchantId"
                                     label="{{ __('sentence.merchant_id') }}" value="" required />
                                 <x-form.input id="secretKey" name="secretKey" label="{{ __('sentence.secret_key') }}"
@@ -66,9 +75,9 @@
                                 <x-form.input id="vat_number" name="vat_number" label="{{ __('sentence.vat_number') }}"
                                     value="" required />
                             </div>
-                            {{-- <button class="btn btn-success" type="submit" style="float: right">
+                            <button class="btn btn-success" type="submit" style="float: right">
                                 <i class="fa fa-save"></i> {{ __('sentence.save') }}
-                            </button> --}}
+                            </button>
                         </div>
                     </div>
 
@@ -76,10 +85,10 @@
                     <div class="card mt-4">
                         <div class="card-body">
                             <div class="row row-cols-2">
-                                {{-- <x-form.input id="longitude" name="address[longitude]" wire:model="longitude"
+                                <x-form.input id="longitude" name="address[longitude]" wire:model="longitude"
                                     label="Longitude" value="" required />
                                 <x-form.input id="latitude" name="address[latitude]" wire:model="latitude"
-                                    label="Latitude" value="" required /> --}}
+                                    label="Latitude" value="" required />
                                 <x-form.input id="sid" name="sid" label="SID" value="" required />
                                 <x-form.input id="token" name="token" label="TOKEN" value="" required />
 
@@ -106,17 +115,14 @@
                                     <label for="" class="form-label">{{ __('sentence.status') }}</label>
                                     <select class="form-select " aria-label="Default select example" required
                                         name="status">
-                                        <option selected>{{ __('sentence.select_status') }}
-                                            {{ __('sentence.select_status') }}
-                                        </option>
-                                        <option value="1"> {{ __('sentence.open') }}</option>
+                                        <option value="1" selected> {{ __('sentence.open') }}</option>
                                         <option value="0">{{ __('sentence.closed') }}</option>
                                     </select>
                                 </div>
                             </div>
-                            {{-- <button class="btn btn-success" type="submit" style="float: right">
+                            <button class="btn btn-success" type="submit" style="float: right">
                                 <i class="fa fa-save"></i> {{ __('sentence.save') }}
-                            </button> --}}
+                            </button>
                         </div>
                     </div>
 
@@ -143,18 +149,18 @@
                                 </div>
                             </div>
 
-                            {{-- <button class="btn btn-success" type="submit" style="float: right">
+                            <button class="btn btn-success" type="submit" style="float: right">
                                 <i class="fa fa-save"></i> {{ __('sentence.save') }}
-                            </button> --}}
+                            </button>
                         </div>
                     </div>
-                    <div class="card mt-3 mb-3">
+                    <div class="card ">
                         <div class="card-body">
 
                             <div class="row row-cols-2">
                                 <div class="mb-3">
-                                    <x-form.input name="latitude" wire:model="latitude" value=""
-                                        label="Latitude" autofocus />
+                                    <x-form.input name="latitude" wire:model="latitude" value="" label="Latitude"
+                                        autofocus />
                                 </div>
                                 <div class="mb-3">
                                     <x-form.input name="longitude" wire:model="longitude" value=""
@@ -167,7 +173,7 @@
                             </button>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </form>

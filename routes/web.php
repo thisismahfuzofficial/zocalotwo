@@ -86,9 +86,10 @@ Route::controller(PageController::class)->group(function () {
     Route::post('/recrutment/send', 'recrutmentMail')->name('recrutment.mail');
 
     /// new pages
+    Route::get('/select-restaurant', 'selectRestaurant')->name('page.selectRestaurant');
     Route::get('/order-online', 'OrderOnline')->name('page.order-online');
     Route::post('/order/data', 'OrderOnlineData')->name('page.order-online-data');
-    Route::get('/order/restaurants', 'OrderRestaurants')->name('order.restaurants');
+    Route::get('/order/restaurants/{restaurant}', 'OrderRestaurants')->name('order.restaurants');
 
 
     Route::get('/orders/payment/{order}', [PaymentController::class, 'showPaymentGateway'])->name('user.orders.payment.index');

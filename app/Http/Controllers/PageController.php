@@ -126,9 +126,9 @@ class PageController extends Controller
     public function userCheckout()
     {
         $infoRestaurant = session('info_restaurant');
-       
 
-        return view('user.checkout',compact('infoRestaurant'));
+
+        return view('user.checkout', compact('infoRestaurant'));
     }
 
     public function singleProduct($restaurant, Product $product)
@@ -141,7 +141,7 @@ class PageController extends Controller
     public function restaurant()
     {
         $restaurants = Restaurant::all();
-        // dd($restaurants);
+
         return view('user.restaurant', compact('restaurants'));
     }
     public function contact()
@@ -167,13 +167,7 @@ class PageController extends Controller
         if (Cart::getContent() === null || Cart::getContent()->count() == 0) {
             return redirect()->route('page.order-online')->with('error', 'Please Complete Order Information');
         }
-        // dd(Cart::getContent());
-        $infoRestaurant = session('info_restaurant');
-        $latitude = $infoRestaurant['latitude'];
-        $longitude = $infoRestaurant['longitude'];
-        $restaurant = Restaurant::selectRaw("*, (6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude)))) AS distance", [$latitude, $longitude, $latitude])
-            ->orderBy('distance')
-            ->first();
+        $restaurant = session('restaurant');
         $cart = session()->get('cart', []);
         $totalPrice = 0;
         $totalQuantity = 0;
@@ -198,7 +192,7 @@ class PageController extends Controller
                     'products' => $product,
                 ];
             });
-            return view('user.cart', compact('extras', 'relatedProducts','restaurant'));
+            return view('user.cart', compact('extras', 'relatedProducts', 'restaurant'));
         }
     }
     public function checkLocation(Request $request)
@@ -387,6 +381,10 @@ class PageController extends Controller
 
     public function orderOnline()
     {
+        session()->forget('restaurant');
+        session()->forget('info_restaurant');
+        Cart::clear();
+
         return view('pages.user.order-online');
     }
     public function OrderOnlineData(Request $request)
@@ -396,22 +394,30 @@ class PageController extends Controller
                 'order_type' => $request->input('order_type'),
                 'delivery_time' => $request->input('delivery-time'),
                 'address' => $request->input('address'),
-                'latitude' => $request->input('latitude'),
-                'longitude' => $request->input('longitude'),
                 'postal_code' => $request->input('postal_code'),
             ],
         ]);
-        return redirect(route('order.restaurants'))->with('success', 'Order and Delivery Time Selected');
+        return redirect(route('page.selectRestaurant'))->with('success', 'Order and Delivery Time Selected');
     }
-    public function OrderRestaurants()
+
+    public function selectRestaurant()
     {
         $infoRestaurant = session('info_restaurant');
-        $latitude = $infoRestaurant['latitude'];
-        $longitude = $infoRestaurant['longitude'];
-        // Add the Haversine formula to calculate the distance
-        $restaurant = Restaurant::selectRaw("*, (6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude)))) AS distance", [$latitude, $longitude, $latitude])
-            ->orderBy('distance')
-            ->first(); // Get the closest restaurant
+        $postal_code = $infoRestaurant['postal_code'];
+
+        $restaurants = Restaurant::whereRaw("FIND_IN_SET(?, post_codes)", [$postal_code])
+            ->limit(3)
+            ->get();
+        return view('user.select-restaurant', compact('restaurants'));
+    }
+    public function OrderRestaurants(Restaurant $restaurant)
+    {
+        session([
+
+            'restaurant' => $restaurant,
+
+        ]);
+
         $categories = Category::whereNull('parent_id')
             ->with('childs', 'products')
             ->get();
