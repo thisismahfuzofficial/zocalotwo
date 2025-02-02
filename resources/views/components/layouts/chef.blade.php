@@ -30,7 +30,7 @@
                           renamed it Taco Zocalo.
                       </p>
                       <div class="mt-3">
-                          <a href="#" class="btn btn-danger rounded-pill ">Contact Us</a>
+                          <a href="{{route('restaurant.contact')}}" class="btn btn-danger rounded-pill ">Contact Us</a>
                       </div>
                   </div>
               </div>

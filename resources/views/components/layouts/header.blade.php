@@ -16,11 +16,17 @@
         <nav id="navmenu" class="navmenu ">
 
             <ul>
-                <li><a href="{{ route('restaurant.home') }}" class="active">Home<br></a></li>
-                <li><a href="{{ route('user.restaurants') }}">Restaurants</a></li>
-                <li><a href="{{ route('page.chef') }}">Our Chefs</a></li>
-                <li><a href="#">Catering</a></li>
-                <li><a href="{{route('restaurant.contact')}}">Contact</a></li>
+                <li><a href="{{ route('restaurant.home') }}"
+                        class="{{ request()->routeIs('restaurant.home') ? 'active' : '' }}">Home</a></li>
+                <li><a href="{{ route('user.restaurants') }}"
+                        class="{{ request()->routeIs('user.restaurants') ? 'active' : '' }}">Restaurants</a></li>
+                <li><a href="{{ route('page.chef') }}" class="{{ request()->routeIs('page.chef') ? 'active' : '' }}">Our
+                        Chefs</a></li>
+                <li><a href="#" class="{{ request()->routeIs('page.catering') ? 'active' : '' }}">Catering</a>
+                </li>
+                <li><a href="{{ route('restaurant.contact') }}"
+                        class="{{ request()->routeIs('restaurant.contact') ? 'active' : '' }}">Contact</a></li>
+
 
                 <a class="btn-getstarted d-block" href="{{ route('page.order-online') }}">Order Online</a>
                 @auth
