@@ -176,7 +176,7 @@
                                                     {{-- <span style="color: #fff">
                                                         Order By: <a href="https://zocalotwo.sohojware.com/"
                                                             style="color: #387ADF"
-                                                            target="_blank">{{ $order->restaurent->name }}</a>,
+                                                            target="_blank">{{ e->restaurent->name }}</a>,
                                                         Email: <a href="mailto:{{ $order->restaurent->email }}"
                                                             style="color: #387ADF">{{ $order->restaurent->email }}</a>
                                                     </span> --}}
