@@ -239,7 +239,7 @@ padding: 30px;">
                 <input type="text" name="name" class="form-control" value="{{ auth()->user()->name }}" required>
             </div>
             <div class="col-md-6">
-                <input type="text" name="last_name" class="form-control" value="{{ auth()->user()->last_name }}"
+                <input type="text" name="last_name" class="form-control" value="{{ auth()->user()->l_name }}"
                     required>
             </div>
 
