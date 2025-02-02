@@ -32,7 +32,7 @@ class UserCreateMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('We Create User Account to Sushi')
+        return $this->subject('We Create User Account to Zocalotwo')
             ->view('emails.user_create_mail')
             ->with('data', $this->data);
     }

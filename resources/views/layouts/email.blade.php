@@ -174,7 +174,7 @@
                                             <tr>
                                                 <td style="font-size: 15px; font-weight: 500">
                                                     <span style="color: #fff">
-                                                        Order By: <a href="https://sushi.zocalotwo.com/" style="color: #387ADF" target="_blank">Entral Sushi</a>, 
+                                                        Order By: <a href="https://zocalotwo.sohojware.com/" style="color: #387ADF" target="_blank">Zocalotwo</a>, 
                                                         Email: <a href="mailto: {{Settings::setting('site.email')}}" style="color: #387ADF"> {{Settings::setting('site.email')}}</a>
                                                     </span>                                                    
                                                 </td>

@@ -298,36 +298,36 @@ class PageController extends Controller
         return view('user.recruitment');
     }
 
-    public function recrutmentMail(Request $request)
-    {
-        // Validate the request, including the PDF file
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'message' => 'required|string',
-            'city' => 'required|string',
-            'terget_position' => 'required|string',
-            'cv_file' => 'required', // Validate the file as a PDF with a max size of 2MB
-        ]);
-        $pdf = $request->file('cv_file');
-        $path = $pdf->storeAs('pdfs', $pdf->getClientOriginalName());
+    // public function recrutmentMail(Request $request)
+    // {
+    //     // Validate the request, including the PDF file
+    //     $request->validate([
+    //         'name' => 'required|string|max:255',
+    //         'email' => 'required|email',
+    //         'message' => 'required|string',
+    //         'city' => 'required|string',
+    //         'terget_position' => 'required|string',
+    //         'cv_file' => 'required', // Validate the file as a PDF with a max size of 2MB
+    //     ]);
+    //     $pdf = $request->file('cv_file');
+    //     $path = $pdf->storeAs('pdfs', $pdf->getClientOriginalName());
 
-        // Prepare the data for the email
-        $data = [
-            'name' => $request->name,
-            'email' => $request->email,
-            'message' => $request->message,
-            'city' => $request->city,
-            'terget_position' => $request->terget_position,
-            'cv_file' => $path,
-        ];
+    //     // Prepare the data for the email
+    //     $data = [
+    //         'name' => $request->name,
+    //         'email' => $request->email,
+    //         'message' => $request->message,
+    //         'city' => $request->city,
+    //         'terget_position' => $request->terget_position,
+    //         'cv_file' => $path,
+    //     ];
 
 
-        // Send the email with the attached file
-        Mail::to('recrutement-centralsushi@hotmail.com')->send(new RecruitmentMail($data));
+    //     // Send the email with the attached file
+    //     Mail::to('recrutement-centralsushi@hotmail.com')->send(new RecruitmentMail($data));
 
-        return back()->with('success', "{{ __('sentence.thank_you_for_contacting_us') }}");
-    }
+    //     return back()->with('success', "{{ __('sentence.thank_you_for_contacting_us') }}");
+    // }
 
     public function storeInSession(Request $request)
     {

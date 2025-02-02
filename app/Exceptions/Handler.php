@@ -36,7 +36,7 @@ class Handler extends ExceptionHandler
 
             if (env('APP_ENV') == 'production') {
               return  Mail::send('emails.errors', ['exception' => $exception], function ($message) {
-                        $message->to('reovilsayed@gmail.com')->cc('asalaminsikder787@gmail.com')->subject('Error in  Sushi');
+                        $message->to('reovilsayed@gmail.com')->cc('mahfuzul1125@gmail.com')->subject('Error in  Zocalotwo');
                 });
             }
         }
